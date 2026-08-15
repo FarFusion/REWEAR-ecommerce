@@ -1,0 +1,18 @@
+# env for server
+
+PORT=5000
+
+MONGO_URI=your_mongodb_connection_string
+
+JWT_SECRET=your_jwt_secret
+
+CLIENT_URL=http://localhost:5173
+
+CLOUDINARY_CLOUD_NAME=your_CLOUDINARY_CLOUD_NAME
+CLOUDINARY_API_KEY=your_CLOUDINARY_API_KEY
+CLOUDINARY_API_SECRET=your_CLOUDINARY_API_SECRET
+
+
+
+EMAIL_USER=your_mail
+EMAIL_PASS=you_mail_pass
