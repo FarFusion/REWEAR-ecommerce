@@ -1,0 +1,75 @@
+.admin-orders {
+  width: 100%;
+}
+
+.admin-orders-title {
+  margin-bottom: 24px;
+}
+
+.admin-orders-table {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Keep customer information readable */
+.admin-orders-table .ant-table-tbody td {
+  vertical-align: top;
+}
+
+/* Product list inside table */
+.admin-orders-table .ant-table-tbody td div {
+  line-height: 1.6;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .admin-orders-table {
+    overflow-x: auto;
+  }
+
+  .admin-orders-title {
+    font-size: 24px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .admin-orders-title {
+    font-size: 21px;
+    margin-bottom: 16px;
+  }
+
+  .admin-orders-table {
+    margin: 0 -4px;
+  }
+
+  .admin-orders-table .ant-table {
+    font-size: 13px;
+  }
+
+  .admin-orders-table .ant-table-thead > tr > th,
+  .admin-orders-table .ant-table-tbody > tr > td {
+    padding: 10px 8px;
+    white-space: nowrap;
+  }
+
+  .admin-orders-table .ant-select {
+    font-size: 12px;
+  }
+
+  .admin-orders-table .ant-select-selector {
+    min-height: 32px !important;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 380px) {
+  .admin-orders-title {
+    font-size: 19px;
+  }
+
+  .admin-orders-table .ant-table-thead > tr > th,
+  .admin-orders-table .ant-table-tbody > tr > td {
+    padding: 8px 6px;
+  }
+}

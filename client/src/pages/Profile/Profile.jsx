@@ -51,6 +51,11 @@ import { getCart } from "../../services/cartService";
 import { getWishlist } from "../../services/wishlistService";
 import { getOrders } from "../../services/orderService";
 
+import "./Profile.css";
+
+
+
+
 const { Title, Text } = Typography;
 
 const Profile = () => {
@@ -344,249 +349,222 @@ const Profile = () => {
         }
       )
     : "-";
-
+  
   return (
     <MainLayout>
-      {/* Profile Header */}
+      <div className="profile-page">
+        {/* Profile Header */}
 
-      <Card
-        style={{
-          marginBottom: 24,
-          borderRadius: 16,
-          overflow: "hidden",
-        }}
-        bodyStyle={{
-          padding: 0,
-        }}
-      >
-        <div
-          style={{
-            height: 130,
-            background:
-              "linear-gradient(135deg, #1677ff, #69b1ff)",
-          }}
-        />
+        <Card className="profile-header-card">
+          <div className="profile-cover" />
 
-        {/* Profile information */}
-        <div
-          style={{
-            padding: "0 30px 30px",
-            marginTop: -50,
-          }}
+          <div className="profile-header-content">
+            <Row
+              align="middle"
+              justify="space-between"
+              gutter={[20, 20]}
+            >
+              <Col xs={24} lg={18}>
+                <Row
+                  align="middle"
+                  gutter={[20, 15]}
+                  className="profile-user-row"
+                >
+                  <Col>
+                    <Avatar
+                      size={100}
+                      src={user.avatar || undefined}
+                      icon={
+                        !user.avatar && (
+                          <UserOutlined />
+                        )
+                      }
+                      className="profile-avatar"
+                    />
+                  </Col>
+
+                  <Col className="profile-user-info">
+                    <Title className="profile-name">
+                      {fullName || "User"}
+                    </Title>
+
+                    <Text
+                      type="secondary"
+                      className="profile-email"
+                    >
+                      {user.email}
+                    </Text>
+
+                    <div className="profile-tags">
+                      <Tag color="blue">
+                        {user.role?.toUpperCase()}
+                      </Tag>
+
+                      {user.isVerified ? (
+                        <Tag
+                          color="success"
+                          icon={
+                            <CheckCircleOutlined />
+                          }
+                        >
+                          Verified
+                        </Tag>
+                      ) : (
+                        <Tag color="orange">
+                          Not Verified
+                        </Tag>
+                      )}
+                    </div>
+                  </Col>
+                </Row>
+              </Col>
+
+              <Col xs={24} lg="auto">
+                <Button
+                  type="primary"
+                  icon={<EditOutlined />}
+                  onClick={openEditProfile}
+                  className="profile-edit-button"
+                >
+                  Edit Profile
+                </Button>
+              </Col>
+            </Row>
+          </div>
+        </Card>
+
+        {/* Account Statistics */}
+
+        <Title
+          level={3}
+          className="profile-section-title"
         >
-          <Row
-            align="middle"
-            justify="space-between"
-            gutter={[20, 20]}
-          >
-            <Col>
-              <Row align="middle" gutter={20}>
-                <Col>
-                  <Avatar
-                    size={100}
-                    src={user.avatar || undefined}
-                    icon={
-                      !user.avatar && (
-                        <UserOutlined />
-                      )
-                    }
-                    style={{
-                      border:
-                        "5px solid white",
-                    }}
-                  />
-                </Col>
+          Account Overview
+        </Title>
 
-                <Col>
-                  <Title
-                    level={2}
-                    style={{
-                      margin: "45px 0 0",
-                    }}
-                  >
-                    {fullName || "User"}
-                  </Title>
-
-                  <Text type="secondary">
-                    {user.email}
-                  </Text>
-
-                  <div style={{ marginTop: 8 }}>
-                    <Tag color="blue">
-                      {user.role?.toUpperCase()}
-                    </Tag>
-
-                    {user.isVerified ? (
-                      <Tag
-                        color="success"
-                        icon={
-                          <CheckCircleOutlined />
-                        }
-                      >
-                        Verified
-                      </Tag>
-                    ) : (
-                      <Tag color="orange">
-                        Not Verified
-                      </Tag>
-                    )}
-                  </div>
-                </Col>
-              </Row>
-            </Col>
-
-            <Col>
-              <Button
-                type="primary"
-                icon={<EditOutlined />}
-                onClick={openEditProfile}
-              >
-                Edit Profile
-              </Button>
-            </Col>
-          </Row>
-        </div>
-      </Card>
-
-      {/* Account Statistics */}
-
-      <Title level={3}>
-        Account Overview
-      </Title>
-
-      <Row
-        gutter={[16, 16]}
-        style={{ marginBottom: 30 }}
-      >
-        <Col xs={24} sm={8}>
-          <Link to="/orders">
-            <Card hoverable>
-              <Statistic
-                title="My Orders"
-                value={orderCount}
-                prefix={
-                  <ShoppingOutlined />
-                }
-              />
-            </Card>
-          </Link>
-        </Col>
-
-        <Col xs={24} sm={8}>
-          <Link to="/wishlist">
-            <Card hoverable>
-              <Statistic
-                title="Wishlist"
-                value={wishlistCount}
-                prefix={
-                  <HeartOutlined />
-                }
-              />
-            </Card>
-          </Link>
-        </Col>
-
-        <Col xs={24} sm={8}>
-          <Link to="/cart">
-            <Card hoverable>
-              <Statistic
-                title="Cart Items"
-                value={cartCount}
-                prefix={
-                  <ShoppingCartOutlined />
-                }
-              />
-            </Card>
-          </Link>
-        </Col>
-      </Row>
-
-      {/* Personal Information */}
-
-      <Row gutter={[20, 20]}>
-        <Col xs={24} lg={12}>
-          <Card
-            title="Personal Information"
-            style={{
-              borderRadius: 12,
-            }}
-          >
-            <InfoRow
-              label="First Name"
-              value={user.firstName}
-            />
-
-            <InfoRow
-              label="Last Name"
-              value={user.lastName}
-            />
-
-            <InfoRow
-              label="Email"
-              value={user.email}
-              icon={<MailOutlined />}
-            />
-
-            <InfoRow
-              label="Phone"
-              value={user.phone || "Not provided"}
-              icon={<PhoneOutlined />}
-            />
-          </Card>
-        </Col>
-
-        <Col xs={24} lg={12}>
-          <Card
-            title="Account Information"
-            style={{
-              borderRadius: 12,
-            }}
-          >
-            <InfoRow
-              label="Account Type"
-              value={user.role}
-            />
-
-            <InfoRow
-              label="Verification"
-              value={
-                user.isVerified
-                  ? "Verified"
-                  : "Not Verified"
-              }
-            />
-
-            <InfoRow
-              label="Member Since"
-              value={memberSince}
-            />
-
-            <InfoRow
-              label="User ID"
-              value={user._id}
-            />
-          </Card>
-        </Col>
-      </Row>
-
-      {/* Saved Addresses */}
-
-      <Card
-        title={
-          <Row
-            justify="space-between"
-            align="middle"
-          >
-            <Col>
-              <span>
-                <EnvironmentOutlined
-                  style={{ marginRight: 8 }}
+        <Row
+          gutter={[16, 16]}
+          className="profile-statistics"
+        >
+          <Col xs={24} sm={8}>
+            <Link to="/orders">
+              <Card hoverable className="profile-stat-card">
+                <Statistic
+                  title="My Orders"
+                  value={orderCount}
+                  prefix={<ShoppingOutlined />}
                 />
+              </Card>
+            </Link>
+          </Col>
+
+          <Col xs={24} sm={8}>
+            <Link to="/wishlist">
+              <Card hoverable className="profile-stat-card">
+                <Statistic
+                  title="Wishlist"
+                  value={wishlistCount}
+                  prefix={<HeartOutlined />}
+                />
+              </Card>
+            </Link>
+          </Col>
+
+          <Col xs={24} sm={8}>
+            <Link to="/cart">
+              <Card hoverable className="profile-stat-card">
+                <Statistic
+                  title="Cart Items"
+                  value={cartCount}
+                  prefix={
+                    <ShoppingCartOutlined />
+                  }
+                />
+              </Card>
+            </Link>
+          </Col>
+        </Row>
+
+        {/* Personal Information */}
+
+        <Row
+          gutter={[20, 20]}
+          className="profile-information-row"
+        >
+          <Col xs={24} lg={12}>
+            <Card
+              title="Personal Information"
+              className="profile-section-card"
+            >
+              <InfoRow
+                label="First Name"
+                value={user.firstName}
+              />
+
+              <InfoRow
+                label="Last Name"
+                value={user.lastName}
+              />
+
+              <InfoRow
+                label="Email"
+                value={user.email}
+                icon={<MailOutlined />}
+              />
+
+              <InfoRow
+                label="Phone"
+                value={
+                  user.phone || "Not provided"
+                }
+                icon={<PhoneOutlined />}
+              />
+            </Card>
+          </Col>
+
+          <Col xs={24} lg={12}>
+            <Card
+              title="Account Information"
+              className="profile-section-card"
+            >
+              <InfoRow
+                label="Account Type"
+                value={user.role}
+              />
+
+              <InfoRow
+                label="Verification"
+                value={
+                  user.isVerified
+                    ? "Verified"
+                    : "Not Verified"
+                }
+              />
+
+              <InfoRow
+                label="Member Since"
+                value={memberSince}
+              />
+
+              <InfoRow
+                label="User ID"
+                value={user._id}
+              />
+            </Card>
+          </Col>
+        </Row>
+
+        {/* Saved Addresses */}
+
+        <Card
+          className="profile-address-card"
+          title={
+            <div className="profile-address-header">
+              <span>
+                <EnvironmentOutlined className="address-title-icon" />
                 Saved Addresses
               </span>
-            </Col>
 
-            <Col>
               <Button
                 type="primary"
                 icon={<PlusOutlined />}
@@ -594,132 +572,91 @@ const Profile = () => {
               >
                 Add Address
               </Button>
-            </Col>
-          </Row>
-        }
-        style={{
-          marginTop: 20,
-          borderRadius: 12,
-        }}
-      >
-        {addressLoading ? (
-          <div
-            style={{
-              textAlign: "center",
-              padding: 30,
-            }}
-          >
-            <Spin />
-          </div>
-        ) : addresses.length === 0 ? (
-          <div
-            style={{
-              textAlign: "center",
-              padding: 30,
-            }}
-          >
-            <EnvironmentOutlined
-              style={{
-                fontSize: 40,
-                color: "#999",
-                marginBottom: 12,
-              }}
-            />
-
-            <div>
-              <Text type="secondary">
-                You don't have any saved addresses.
-              </Text>
             </div>
+          }
+        >
+          {addressLoading ? (
+            <div className="profile-address-loading">
+              <Spin />
+            </div>
+          ) : addresses.length === 0 ? (
+            <div className="profile-no-address">
+              <EnvironmentOutlined className="no-address-icon" />
 
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              style={{ marginTop: 16 }}
-              onClick={openAddAddress}
-            >
-              Add Your First Address
-            </Button>
-          </div>
-        ) : (
-          <Row gutter={[16, 16]}>
-            {addresses.map((address) => (
-              <Col
-                xs={24}
-                md={12}
-                key={address._id}
+              <div>
+                <Text type="secondary">
+                  You don't have any saved addresses.
+                </Text>
+              </div>
+
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                className="first-address-button"
+                onClick={openAddAddress}
               >
-                <Card
-                  size="small"
-                  style={{
-                    height: "100%",
-                    borderRadius: 10,
-                    border: address.isDefault
-                      ? "2px solid #1677ff"
-                      : "1px solid #d9d9d9",
-                  }}
+                Add Your First Address
+              </Button>
+            </div>
+          ) : (
+            <Row gutter={[16, 16]}>
+              {addresses.map((address) => (
+                <Col
+                  xs={24}
+                  md={12}
+                  key={address._id}
                 >
-                  <Row
-                    justify="space-between"
-                    align="middle"
+                  <Card
+                    size="small"
+                    className={`saved-address ${
+                      address.isDefault
+                        ? "default-address"
+                        : ""
+                    }`}
                   >
-                    <Col>
+                    <div className="saved-address-header">
+                      <div>
+                        <Text strong>
+                          {address.label}
+                        </Text>
+
+                        {address.isDefault && (
+                          <Tag
+                            color="blue"
+                            className="default-address-tag"
+                          >
+                            Default
+                          </Tag>
+                        )}
+                      </div>
+                    </div>
+
+                    <Divider className="address-divider" />
+
+                    <div className="address-details">
                       <Text strong>
-                        {address.label}
+                        {address.firstName}{" "}
+                        {address.lastName}
                       </Text>
 
-                      {address.isDefault && (
-                        <Tag
-                          color="blue"
-                          style={{
-                            marginLeft: 8,
-                          }}
-                        >
-                          Default
-                        </Tag>
-                      )}
-                    </Col>
-                  </Row>
+                      <Text type="secondary">
+                        {address.phone}
+                      </Text>
 
-                  <Divider
-                    style={{
-                      margin: "12px 0",
-                    }}
-                  />
+                      <Text>
+                        {address.address}
+                      </Text>
 
-                  <Text strong>
-                    {address.firstName}{" "}
-                    {address.lastName}
-                  </Text>
+                      <Text>
+                        {address.city},{" "}
+                        {address.state} -{" "}
+                        {address.pincode}
+                      </Text>
+                    </div>
 
-                  <br />
+                    <Divider className="address-divider" />
 
-                  <Text type="secondary">
-                    {address.phone}
-                  </Text>
-
-                  <br />
-
-                  <Text>
-                    {address.address}
-                  </Text>
-
-                  <br />
-
-                  <Text>
-                    {address.city},{" "}
-                    {address.state} -{" "}
-                    {address.pincode}
-                  </Text>
-
-                  <Divider
-                    style={{
-                      margin: "12px 0",
-                    }}
-                  />
-
-                  <Row gutter={8}>
-                    <Col>
+                    <div className="address-actions">
                       <Button
                         size="small"
                         icon={<EditOutlined />}
@@ -729,9 +666,7 @@ const Profile = () => {
                       >
                         Edit
                       </Button>
-                    </Col>
 
-                    <Col>
                       <Popconfirm
                         title="Delete this address?"
                         description="This address will be permanently deleted."
@@ -751,10 +686,8 @@ const Profile = () => {
                           Delete
                         </Button>
                       </Popconfirm>
-                    </Col>
 
-                    {!address.isDefault && (
-                      <Col>
+                      {!address.isDefault && (
                         <Button
                           size="small"
                           type="link"
@@ -766,43 +699,34 @@ const Profile = () => {
                         >
                           Set Default
                         </Button>
-                      </Col>
-                    )}
-                  </Row>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        )}
-      </Card>
+                      )}
+                    </div>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          )}
+        </Card>
 
-      {/* Quick Actions */}
+        {/* Quick Actions */}
 
-      <Card
-        title="Quick Actions"
-        style={{
-          marginTop: 20,
-          borderRadius: 12,
-        }}
-      >
-        <Row gutter={[12, 12]}>
-          <Col>
+        <Card
+          title="Quick Actions"
+          className="profile-quick-actions"
+        >
+          <div className="quick-actions-list">
             <Link to="/orders">
               <Button icon={<ShoppingOutlined />}>
                 My Orders
               </Button>
             </Link>
-          </Col>
 
-          <Col>
             <Link to="/wishlist">
               <Button icon={<HeartOutlined />}>
                 Wishlist
               </Button>
             </Link>
-          </Col>
 
-          <Col>
             <Link to="/cart">
               <Button
                 icon={
@@ -812,276 +736,295 @@ const Profile = () => {
                 Shopping Cart
               </Button>
             </Link>
-          </Col>
-            
-          {/* Admin Dashboard */} 
-          {user.role === "admin" && ( 
-            <Col> 
-                <Link to="/admin/dashboard"> 
-                    <Button type="primary" icon={<UserOutlined />} > 
-                        Admin Dashboard 
-                    </Button> 
-                </Link> 
-            </Col> )}
 
-        </Row>
-      </Card>
+            {user.role === "admin" && (
+              <Link to="/admin/dashboard">
+                <Button
+                  type="primary"
+                  icon={<UserOutlined />}
+                >
+                  Admin Dashboard
+                </Button>
+              </Link>
+            )}
+          </div>
+        </Card>
+
+        {/* Edit Profile Modal */}
 
         <Modal
-            title="Edit Profile"
-            open={editOpen}
-            onCancel={() => setEditOpen(false)}
-            footer={null}
-            >
-            <Form
-                form={form}
-                layout="vertical"
-                onFinish={handleUpdateProfile}
-            >
-                <Form.Item
-                label="First Name"
-                name="firstName"
-                rules={[
-                    {
-                    required: true,
-                    message: "Please enter your first name",
-                    },
-                ]}
-                >
-                <Input />
-                </Form.Item>
-
-                <Form.Item
-                label="Last Name"
-                name="lastName"
-                rules={[
-                    {
-                    required: true,
-                    message: "Please enter your last name",
-                    },
-                ]}
-                >
-                <Input />
-                </Form.Item>
-
-                <Form.Item
-                label="Phone"
-                name="phone"
-                >
-                <Input />
-                </Form.Item>
-
-                <Form.Item label="Profile Picture">
-                  <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                    <Avatar
-                      size={80}
-                      src={user?.avatar || undefined}
-                      icon={!user?.avatar && <UserOutlined />}
-                    />
-
-                    <Upload
-                      accept="image/*"
-                      showUploadList={false}
-                      customRequest={handleAvatarUpload}
-                    >
-                      <Button icon={<UploadOutlined />}>
-                        Choose Image
-                      </Button>
-                    </Upload>
-                  </div>
-
-                  <Typography.Text type="secondary">
-                    JPG, JPEG, PNG or WEBP. Maximum size: 5 MB.
-                  </Typography.Text>
-                </Form.Item>
-
-                <Button
-                    type="primary"
-                    htmlType="submit"
-                    loading={saving}
-                    block
-                    >
-                    Save Changes
-                </Button>
-            </Form>
-        </Modal>
-      
-      <Modal
-        title={
-          editingAddress
-            ? "Edit Address"
-            : "Add New Address"
-        }
-        open={addressModalOpen}
-        onCancel={() => {
-          setAddressModalOpen(false);
-          setEditingAddress(null);
-          addressForm.resetFields();
-        }}
-        footer={null}
-      >
-        <Form
-          form={addressForm}
-          layout="vertical"
-          onFinish={handleSaveAddress}
+          title="Edit Profile"
+          open={editOpen}
+          onCancel={() => setEditOpen(false)}
+          footer={null}
+          className="profile-modal"
         >
-          <Form.Item
-            label="Address Type"
-            name="label"
-            rules={[
-              {
-                required: true,
-                message:
-                  "Please select an address type",
-              },
-            ]}
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={handleUpdateProfile}
           >
-            <Select>
-              <Select.Option value="Home">
-                Home
-              </Select.Option>
+            <Form.Item
+              label="First Name"
+              name="firstName"
+              rules={[
+                {
+                  required: true,
+                  message:
+                    "Please enter your first name",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
 
-              <Select.Option value="Work">
-                Work
-              </Select.Option>
+            <Form.Item
+              label="Last Name"
+              name="lastName"
+              rules={[
+                {
+                  required: true,
+                  message:
+                    "Please enter your last name",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
 
-              <Select.Option value="Other">
-                Other
-              </Select.Option>
-            </Select>
-          </Form.Item>
+            <Form.Item
+              label="Phone"
+              name="phone"
+            >
+              <Input />
+            </Form.Item>
 
-          <Row gutter={12}>
-            <Col xs={24} sm={12}>
-              <Form.Item
-                label="First Name"
-                name="firstName"
-                rules={[
-                  {
-                    required: true,
-                    message:
-                      "Please enter first name",
-                  },
-                ]}
+            <Form.Item label="Profile Picture">
+              <div className="avatar-upload">
+                <Avatar
+                  size={80}
+                  src={user?.avatar || undefined}
+                  icon={
+                    !user?.avatar && (
+                      <UserOutlined />
+                    )
+                  }
+                />
+
+                <Upload
+                  accept="image/*"
+                  showUploadList={false}
+                  customRequest={
+                    handleAvatarUpload
+                  }
+                >
+                  <Button
+                    icon={<UploadOutlined />}
+                  >
+                    Choose Image
+                  </Button>
+                </Upload>
+              </div>
+
+              <Typography.Text
+                type="secondary"
+                className="avatar-help-text"
               >
-                <Input />
-              </Form.Item>
-            </Col>
+                JPG, JPEG, PNG or WEBP.
+                Maximum size: 5 MB.
+              </Typography.Text>
+            </Form.Item>
 
-            <Col xs={24} sm={12}>
-              <Form.Item
-                label="Last Name"
-                name="lastName"
-                rules={[
-                  {
-                    required: true,
-                    message:
-                      "Please enter last name",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={saving}
+              block
+            >
+              Save Changes
+            </Button>
+          </Form>
+        </Modal>
 
-          <Form.Item
-            label="Phone"
-            name="phone"
-            rules={[
-              {
-                required: true,
-                message:
-                  "Please enter phone number",
-              },
-            ]}
+        {/* Address Modal */}
+
+        <Modal
+          title={
+            editingAddress
+              ? "Edit Address"
+              : "Add New Address"
+          }
+          open={addressModalOpen}
+          onCancel={() => {
+            setAddressModalOpen(false);
+            setEditingAddress(null);
+            addressForm.resetFields();
+          }}
+          footer={null}
+          className="profile-modal"
+        >
+          <Form
+            form={addressForm}
+            layout="vertical"
+            onFinish={handleSaveAddress}
           >
-            <Input />
-          </Form.Item>
+            <Form.Item
+              label="Address Type"
+              name="label"
+              rules={[
+                {
+                  required: true,
+                  message:
+                    "Please select an address type",
+                },
+              ]}
+            >
+              <Select>
+                <Select.Option value="Home">
+                  Home
+                </Select.Option>
 
-          <Form.Item
-            label="Address"
-            name="address"
-            rules={[
-              {
-                required: true,
-                message:
-                  "Please enter your address",
-              },
-            ]}
-          >
-            <Input.TextArea
-              rows={3}
-              placeholder="House/Flat No., Street, Area"
-            />
-          </Form.Item>
+                <Select.Option value="Work">
+                  Work
+                </Select.Option>
 
-          <Row gutter={12}>
-            <Col xs={24} sm={12}>
-              <Form.Item
-                label="City"
-                name="city"
-                rules={[
-                  {
-                    required: true,
-                    message:
-                      "Please enter city",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
+                <Select.Option value="Other">
+                  Other
+                </Select.Option>
+              </Select>
+            </Form.Item>
 
-            <Col xs={24} sm={12}>
-              <Form.Item
-                label="State"
-                name="state"
-                rules={[
-                  {
-                    required: true,
-                    message:
-                      "Please enter state",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
+            <Row gutter={12}>
+              <Col xs={24} sm={12}>
+                <Form.Item
+                  label="First Name"
+                  name="firstName"
+                  rules={[
+                    {
+                      required: true,
+                      message:
+                        "Please enter first name",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
 
-          <Form.Item
-            label="Pincode"
-            name="pincode"
-            rules={[
-              {
-                required: true,
-                message:
-                  "Please enter pincode",
-              },
-              {
-                len: 6,
-                message:
-                  "Pincode must be 6 digits",
-              },
-            ]}
-          >
-            <Input maxLength={6} />
-          </Form.Item>
+              <Col xs={24} sm={12}>
+                <Form.Item
+                  label="Last Name"
+                  name="lastName"
+                  rules={[
+                    {
+                      required: true,
+                      message:
+                        "Please enter last name",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+            </Row>
 
-          <Button
-            type="primary"
-            htmlType="submit"
-            loading={addressSaving}
-            block
-          >
-            {editingAddress
-              ? "Update Address"
-              : "Save Address"}
-          </Button>
-        </Form>
-      </Modal>
+            <Form.Item
+              label="Phone"
+              name="phone"
+              rules={[
+                {
+                  required: true,
+                  message:
+                    "Please enter phone number",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
 
+            <Form.Item
+              label="Address"
+              name="address"
+              rules={[
+                {
+                  required: true,
+                  message:
+                    "Please enter your address",
+                },
+              ]}
+            >
+              <Input.TextArea
+                rows={3}
+                placeholder="House/Flat No., Street, Area"
+              />
+            </Form.Item>
+
+            <Row gutter={12}>
+              <Col xs={24} sm={12}>
+                <Form.Item
+                  label="City"
+                  name="city"
+                  rules={[
+                    {
+                      required: true,
+                      message:
+                        "Please enter city",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+
+              <Col xs={24} sm={12}>
+                <Form.Item
+                  label="State"
+                  name="state"
+                  rules={[
+                    {
+                      required: true,
+                      message:
+                        "Please enter state",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Form.Item
+              label="Pincode"
+              name="pincode"
+              rules={[
+                {
+                  required: true,
+                  message:
+                    "Please enter pincode",
+                },
+                {
+                  len: 6,
+                  message:
+                    "Pincode must be 6 digits",
+                },
+              ]}
+            >
+              <Input maxLength={6} />
+            </Form.Item>
+
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={addressSaving}
+              block
+            >
+              {editingAddress
+                ? "Update Address"
+                : "Save Address"}
+            </Button>
+          </Form>
+        </Modal>
+      </div>
     </MainLayout>
   );
 };

@@ -14,6 +14,10 @@ import {
 import { useNavigate } from "react-router-dom";
 import { getCategories } from "../services/categoryService";
 
+import "./categorySection.css";
+
+
+
 const { Title } = Typography;
 
 const categoryIcons = {
@@ -52,11 +56,11 @@ const CategorySection = () => {
   };
 
   return (
-    <section style={{ marginTop: 50, marginBottom: 60 }}>
-      <Title level={2}>Shop by Category</Title>
+    <section className="category-section">
+      <Title className="section-title" level={2}>Shop by Category</Title>
 
       {categoryLoading ? (
-        <div style={{ textAlign: "center", padding: 40 }}>
+        <div className="category-loading">
           Loading categories...
         </div>
       ) : (
@@ -74,35 +78,16 @@ const CategorySection = () => {
                 onClick={() =>
                   navigate(`/products?category=${category._id}`)
                 }
-                style={{
-                  textAlign: "center",
-                  cursor: "pointer",
-                  height: "100%",
-                }}
+                className="category-card"
               >
-                <div
-                  style={{
-                    width: 80,
-                    height: 80,
-                    margin: "0 auto 16px",
-                    borderRadius: "50%",
-                    background: "#f0f5ff",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: 40,
-                      color: "#1677ff",
-                    }}
-                  >
+                <div className="category-icon">
+                  <span>
                     {categoryIcons[category.name] || <ShopOutlined />}
                   </span>
                 </div>
 
-                <Title level={5} style={{ margin: 0 }}>
+                <Title level={5} className="category-name"
+                >
                   {category.name}
                 </Title>
               </Card>

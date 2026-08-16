@@ -18,6 +18,11 @@ import {
   deleteCategory,
 } from "../../services/categoryService";
 
+import "./AdminCategories.css";
+
+
+
+
 const Categories = () => {
   const [categories, setCategories] = useState([]);
   const [open, setOpen] = useState(false);
@@ -96,60 +101,67 @@ const Categories = () => {
 
   return (
     <MainLayout>
-      <Button
-        type="primary"
-        style={{ marginBottom: 20 }}
-        onClick={() => {
-          setEditing(null);
-          form.resetFields();
-          setOpen(true);
-        }}
-      >
-        Add Category
-      </Button>
-
-      <Table
-        rowKey="_id"
-        columns={columns}
-        dataSource={categories}
-      />
-
-      <Modal
-        open={open}
-        onCancel={() => setOpen(false)}
-        footer={null}
-        title={
-          editing
-            ? "Edit Category"
-            : "New Category"
-        }
-      >
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={handleSubmit}
-        >
-          <Form.Item
-            name="name"
-            label="Category"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
+      <div className="admin-categories">
+        <div className="admin-categories-header">
           <Button
-            htmlType="submit"
             type="primary"
-            block
+            onClick={() => {
+              setEditing(null);
+              form.resetFields();
+              setOpen(true);
+            }}
           >
-            Save
+            Add Category
           </Button>
-        </Form>
-      </Modal>
+        </div>
+
+        <div className="admin-categories-table">
+          <Table
+            rowKey="_id"
+            columns={columns}
+            dataSource={categories}
+            scroll={{ x: 500 }}
+          />
+        </div>
+
+        <Modal
+          open={open}
+          onCancel={() => {
+            setOpen(false);
+            setEditing(null);
+            form.resetFields();
+          }}
+          footer={null}
+          title={editing ? "Edit Category" : "New Category"}
+          width="min(500px, 95vw)"
+        >
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={handleSubmit}
+          >
+            <Form.Item
+              name="name"
+              label="Category"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Button
+              htmlType="submit"
+              type="primary"
+              block
+            >
+              Save
+            </Button>
+          </Form>
+        </Modal>
+      </div>
     </MainLayout>
   );
 };

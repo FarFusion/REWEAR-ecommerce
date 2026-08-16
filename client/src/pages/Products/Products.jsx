@@ -9,6 +9,12 @@ import ProductGrid from "../../components/product/ProductGrid";
 import { getProducts } from "../../services/productService";
 import { getCategories } from "../../services/categoryService";
 
+import "./Products.css";
+
+
+
+
+
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -97,54 +103,48 @@ const Products = () => {
 
   return (
     <MainLayout>
-      <Row gutter={[24, 24]}>
-        {/* Filters */}
-        <Col xs={24} md={6}>
-          <ProductFilters
-            filters={filters}
-            setFilters={setFilters}
-            categories={categories}
-          />
-        </Col>
+      <div className="products-page">
+        <Row gutter={[24, 24]}>
+          {/* Filters */}
+          <Col xs={24} md={6}>
+            <ProductFilters
+              filters={filters}
+              setFilters={setFilters}
+              categories={categories}
+            />
+          </Col>
 
-        {/* Products */}
-        <Col xs={24} md={18}>
-          {loading ? (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                padding: 80,
-              }}
-            >
-              <Spin size="large" />
+          {/* Products */}
+          <Col xs={24} md={18}>
+            <div className="products-content">
+              {loading ? (
+                <div className="products-loading">
+                  <Spin size="large" />
+                </div>
+              ) : products.length === 0 ? (
+                <div className="products-empty">
+                  <Empty description="No products found" />
+                </div>
+              ) : (
+                <>
+                  <ProductGrid products={products} />
+
+                  <div className="products-pagination">
+                    <Pagination
+                      current={filters.page}
+                      pageSize={filters.limit}
+                      total={total}
+                      showSizeChanger
+                      pageSizeOptions={["8", "12", "24", "48"]}
+                      onChange={handlePageChange}
+                    />
+                  </div>
+                </>
+              )}
             </div>
-          ) : products.length === 0 ? (
-            <Empty description="No products found" />
-          ) : (
-            <>
-              <ProductGrid products={products} />
-
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginTop: 30,
-                }}
-              >
-                <Pagination
-                  current={filters.page}
-                  pageSize={filters.limit}
-                  total={total}
-                  showSizeChanger
-                  pageSizeOptions={["8", "12", "24", "48"]}
-                  onChange={handlePageChange}
-                />
-              </div>
-            </>
-          )}
-        </Col>
-      </Row>
+          </Col>
+        </Row>
+      </div>
     </MainLayout>
   );
 };

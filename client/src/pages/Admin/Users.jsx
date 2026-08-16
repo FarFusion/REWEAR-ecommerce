@@ -18,6 +18,10 @@ import {
   deleteUser,
 } from "../../services/adminUserService";
 
+import "./Users.css";
+
+
+
 const { Title } = Typography;
 
 const Users = () => {
@@ -156,15 +160,21 @@ const Users = () => {
 
   return (
     <MainLayout>
-      <Title level={2}>User Management</Title>
+      <div className="admin-users">
+        <Title level={2} className="admin-users-title">
+          User Management
+        </Title>
 
-      <Table
-        rowKey="_id"
-        columns={columns}
-        dataSource={users}
-        loading={loading}
-        scroll={{ x: 900 }}
-      />
+        <div className="admin-users-table">
+          <Table
+            rowKey="_id"
+            columns={columns}
+            dataSource={users}
+            loading={loading}
+            scroll={{ x: 900 }}
+          />
+        </div>
+      </div>
     </MainLayout>
   );
 };

@@ -24,6 +24,12 @@ import {
   deleteProduct,
 } from "../../services/productService";
 
+import "./AdminProducts.css";
+
+
+
+
+
 const Products = () => {
   const [products, setProducts] = useState([]);
 
@@ -93,10 +99,10 @@ async function handleSubmit(values) {
       render: (_, record) => (
         <img
           src={
-            record.images?.[0] ||
+            record.images?.[0]?.url ||
             "https://placehold.co/80x80"
           }
-          alt=""
+          alt={record.title}
           width={70}
         />
       ),
@@ -149,43 +155,49 @@ async function handleSubmit(values) {
   ];
 
   return (
-    
     <MainLayout>
-      <Button
+      <div className="admin-products">
+        <div className="admin-products-header">
+          <Button
             type="primary"
-            style={{ marginBottom: 20 }}
             onClick={() => {
-                setEditing(null);
-                form.resetFields();
-                setOpen(true);
+              setEditing(null);
+              form.resetFields();
+              setOpen(true);
             }}
-            >
+          >
             Add Product
-     </Button>
+          </Button>
+        </div>
 
-      <Table
-        rowKey="_id"
-        columns={columns}
-        dataSource={products}
-      />
+        <div className="admin-products-table">
+          <Table
+            rowKey="_id"
+            columns={columns}
+            dataSource={products}
+            scroll={{ x: 800 }}
+          />
+        </div>
 
-      <Modal
-        open={open}
-        footer={null}
-        destroyOnHidden
-        onCancel={() => {
+        <Modal
+          open={open}
+          footer={null}
+          destroyOnHidden
+          onCancel={() => {
             setOpen(false);
             setEditing(null);
             form.resetFields();
-        }}
-        title={editing ? "Edit Product" : "Add Product"}
+          }}
+          title={editing ? "Edit Product" : "Add Product"}
+          width="min(700px, 95vw)"
         >
-        <ProductForm
+          <ProductForm
             form={form}
             categories={categories}
             onFinish={handleSubmit}
-        />
-      </Modal>
+          />
+        </Modal>
+      </div>
     </MainLayout>
   );
 };

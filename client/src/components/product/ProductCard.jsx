@@ -1,6 +1,8 @@
 import { Card, Button, Image, Rate } from "antd";
 import { Link } from "react-router-dom";
 
+import "./ProductCard.css";
+
 const ProductCard = ({ product }) => {
   const imageUrl =
     product.images?.[0]?.url ||
@@ -8,39 +10,47 @@ const ProductCard = ({ product }) => {
 
   return (
     <Card
+      className="product-card"
       hoverable
       cover={
         <Image
+          className="product-card-image"
           preview={false}
           alt={product.title}
           src={imageUrl}
           fallback="https://placehold.co/400x300?text=No+Image"
-          style={{
-            height: 220,
-            width: "100%",
-            objectFit: "cover",
-          }}
         />
       }
     >
-      <h3>{product.title}</h3>
+      <div className="product-card-content">
+        <h3 className="product-card-title">
+          {product.title}
+        </h3>
 
-      <p>{product.condition}</p>
+        <p className="product-card-condition">
+          {product.condition}
+        </p>
 
-      <Rate
-        disabled
-        allowHalf
-        value={product.averageRating || 0}
-        style={{ fontSize: 14 }}
-      />
+        <Rate
+          className="product-card-rating"
+          disabled
+          allowHalf
+          value={product.averageRating || 0}
+        />
 
-      <h2>₹{product.price}</h2>
+        <h2 className="product-card-price">
+          ₹{product.price}
+        </h2>
 
-      <Link to={`/products/${product._id}`}>
-        <Button type="primary" block>
-          View Details
-        </Button>
-      </Link>
+        <Link 
+          to={`/products/${product._id}`}
+          className="product-card-link"
+        >
+          <Button type="primary" block>
+            View Details
+          </Button>
+        </Link>
+      </div>
     </Card>
   );
 };

@@ -8,6 +8,8 @@ import FeaturedProducts from "../../home/FeaturedProducts";
 import LatestProducts from "../../home/LatestProducts";
 import WhyRewear from "../../home/WhyRewear";
 
+import "./Home.css";
+
 
 const { Title, Paragraph } = Typography;
 
@@ -33,22 +35,20 @@ const Home = () => {
       <WhyRewear/>
 
       {/* ================= CTA ================= */}
-      <section
+      <section className="home-cta"
         style={{
-          textAlign: "center",
-          padding: "60px 20px",
-          marginBottom: 40,
+          
         }}
       >
         <Title level={2}>
           Have something you don't use anymore?
         </Title>
 
-        <Paragraph
-          style={{
-            fontSize: 17,
-            color: "#666",
-          }}
+        <Paragraph className="home-cta-text"
+          // style={{
+          //   fontSize: 17,
+          //   color: "#666",
+          // }}
         >
           Turn unused products into money and give them
           a new home.

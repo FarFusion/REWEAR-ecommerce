@@ -1,0 +1,64 @@
+
+/* =========================================
+   PRODUCT SECTIONS
+========================================= */
+
+.product-section {
+  margin-bottom: 60px;
+}
+
+.product-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.section-title {
+  margin: 0 !important;
+}
+
+.product-section-loading{
+    text-align: center; 
+    padding: 60;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+  .product-section {
+    margin-bottom: 40px;
+  }
+
+  .product-section-header {
+    margin-bottom: 18px;
+  }
+
+  .product-section-header .section-title {
+    font-size: 22px !important;
+  }
+
+  .product-section-header a {
+    font-size: 13px;
+    white-space: nowrap;
+  }
+}
+
+
+/* =========================================
+   VERY SMALL MOBILE
+========================================= */
+
+@media (max-width: 380px) {
+  .product-section-header .section-title {
+    font-size: 20px !important;
+  }
+
+  .product-section-header a {
+    font-size: 12px;
+  }
+}

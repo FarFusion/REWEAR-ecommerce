@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import ProductCard from "../components/product/ProductCard";
 import { getProducts } from "../services/productService";
 
+import "./productSection.css";
+
 const { Title } = Typography;
 
 const FeaturedProducts = () => {
@@ -35,16 +37,9 @@ const FeaturedProducts = () => {
   };
 
   return (
-    <section style={{ marginBottom: 60 }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: 24,
-        }}
-      >
-        <Title level={2} style={{ margin: 0 }}>
+    <section className="product-section">
+      <div className="product-section-header">
+        <Title className="section-title" level={2}>
           Featured Products
         </Title>
 
@@ -54,7 +49,7 @@ const FeaturedProducts = () => {
       </div>
 
       {productLoading ? (
-        <div style={{ textAlign: "center", padding: 60 }}>
+        <div className="product-section-loading">
           <Spin size="large" />
         </div>
       ) : products.length === 0 ? (

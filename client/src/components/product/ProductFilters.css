@@ -1,0 +1,84 @@
+/* =========================
+   Product Filters
+========================= */
+
+.product-filters-card {
+  width: 100%;
+}
+
+.product-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.product-filters .filter-control {
+  width: 100%;
+}
+
+.price-filter {
+  width: 100%;
+}
+
+.price-filter .ant-input-number {
+  width: 50%;
+}
+
+.reset-filters-button {
+  margin-top: 4px;
+}
+
+/* =========================
+   Tablet
+========================= */
+
+@media (max-width: 900px) {
+  .product-filters {
+    gap: 14px;
+  }
+}
+
+/* =========================
+   Mobile
+========================= */
+
+@media (max-width: 767px) {
+  .product-filters-card {
+    margin-bottom: 4px;
+  }
+
+  .product-filters-card .ant-card-head {
+    min-height: 48px;
+    padding: 0 16px;
+  }
+
+  .product-filters-card .ant-card-head-title {
+    font-size: 16px;
+  }
+
+  .product-filters-card .ant-card-body {
+    padding: 16px;
+  }
+
+  .product-filters {
+    gap: 14px;
+  }
+}
+
+/* =========================
+   Small Mobile
+========================= */
+
+@media (max-width: 380px) {
+  .product-filters-card .ant-card-head {
+    padding: 0 12px;
+  }
+
+  .product-filters-card .ant-card-body {
+    padding: 12px;
+  }
+
+  .product-filters {
+    gap: 12px;
+  }
+}

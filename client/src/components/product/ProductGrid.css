@@ -1,0 +1,49 @@
+/* =========================
+   Product Grid
+========================= */
+
+.product-grid {
+  width: 100%;
+}
+
+/* =========================
+   Tablet
+========================= */
+
+@media (max-width: 900px) {
+  .product-grid .ant-row {
+    row-gap: 20px !important;
+  }
+}
+
+/* =========================
+   Mobile
+========================= */
+
+@media (max-width: 600px) {
+  .product-grid .ant-row {
+    margin-left: -8px !important;
+    margin-right: -8px !important;
+  }
+
+  .product-grid .ant-col {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+}
+
+/* =========================
+   Small Mobile
+========================= */
+
+@media (max-width: 380px) {
+  .product-grid .ant-row {
+    margin-left: -6px !important;
+    margin-right: -6px !important;
+  }
+
+  .product-grid .ant-col {
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
+}

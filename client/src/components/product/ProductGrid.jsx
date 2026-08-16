@@ -1,30 +1,33 @@
 import { Row, Col } from "antd";
 import ProductCard from "./ProductCard";
 
+import "./ProductGrid.css";
+
+
 const ProductGrid = ({ products }) => {
 
     return (
+        <div className="product-grid">
+            <Row gutter={[24,24]}>
 
-        <Row gutter={[24,24]}>
+                {products.map(product=>(
 
-            {products.map(product=>(
+                    <Col
+                        xs={24}
+                        sm={12}
+                        md={8}
+                        lg={8}
+                        key={product._id}
+                    >
 
-                <Col
-                    xs={24}
-                    sm={12}
-                    md={8}
-                    lg={8}
-                    key={product._id}
-                >
+                        <ProductCard product={product}/>
 
-                    <ProductCard product={product}/>
+                    </Col>
 
-                </Col>
+                ))}
 
-            ))}
-
-        </Row>
-
+            </Row>
+        </div>
     );
 
 };

@@ -13,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
 import { getOrders } from "../../services/orderService";
 
+import "./Orders.css";
+
 const { Title, Text } = Typography;
 
 const Orders = () => {
@@ -43,7 +45,9 @@ const Orders = () => {
   if (loading) {
     return (
       <MainLayout>
-        <Spin size="large" />
+        <div className="orders-loading">
+          <Spin size="large" />
+        </div>
       </MainLayout>
     );
   }
@@ -51,106 +55,106 @@ const Orders = () => {
   if (!orders.length) {
     return (
       <MainLayout>
-        <Title level={2}>My Orders</Title>
+        <div className="orders-page">
+          <Title level={2} className="orders-title">
+            My Orders
+          </Title>
 
-        <Empty description="You haven't placed any orders yet." />
+          <div className="orders-empty">
+            <Empty description="You haven't placed any orders yet." />
+          </div>
+        </div>
       </MainLayout>
     );
   }
 
   return (
     <MainLayout>
-      <Title level={2}>My Orders</Title>
+      <div className="orders-page">
+        <Title level={2} className="orders-title">
+          My Orders
+        </Title>
 
-      {orders.map((order) => (
-        <Card
-          key={order._id}
-          style={{ marginBottom: 20 }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginBottom: 15,
-            }}
-          >
-            <div>
-              <Text strong>
-                Order #{order._id.slice(-8)}
-              </Text>
-
-              <br />
-
-              <Text type="secondary">
-                {new Date(
-                  order.createdAt
-                ).toLocaleDateString()}
-              </Text>
-            </div>
-
-            <Tag color="blue">
-              {order.status}
-            </Tag>
-          </div>
-
-          {order.items.map((item) => (
-            <div
-              key={item.product?._id || item.title}
-              style={{
-                display: "flex",
-                justifyContent:
-                  "space-between",
-                marginBottom: 10,
-              }}
+        <div className="orders-list">
+          {orders.map((order) => (
+            <Card
+              key={order._id}
+              className="order-card"
             >
-              <div>
-                <Text strong>
-                  {item.title}
-                </Text>
+              <div className="order-header">
+                <div className="order-info">
+                  <Text strong>
+                    Order #{order._id.slice(-8)}
+                  </Text>
 
-                <br />
+                  <Text
+                    type="secondary"
+                    className="order-date"
+                  >
+                    {new Date(
+                      order.createdAt
+                    ).toLocaleDateString()}
+                  </Text>
+                </div>
 
-                <Text type="secondary">
-                  Qty: {item.quantity}
-                </Text>
+                <Tag color="blue">
+                  {order.status}
+                </Tag>
               </div>
 
-              <Text>
-                ₹
-                {item.price *
-                  item.quantity}
-              </Text>
-            </div>
+              <div className="order-items">
+                {order.items.map((item) => (
+                  <div
+                    key={
+                      item.product?._id ||
+                      item.title
+                    }
+                    className="order-item"
+                  >
+                    <div className="order-item-info">
+                      <Text strong>
+                        {item.title}
+                      </Text>
+
+                      <Text
+                        type="secondary"
+                        className="order-item-quantity"
+                      >
+                        Qty: {item.quantity}
+                      </Text>
+                    </div>
+
+                    <Text className="order-item-price">
+                      ₹
+                      {item.price *
+                        item.quantity}
+                    </Text>
+                  </div>
+                ))}
+              </div>
+
+              <div className="order-divider" />
+
+              <div className="order-footer">
+                <Text strong className="order-total">
+                  Total: ₹{order.totalAmount}
+                </Text>
+
+                <Button
+                  type="primary"
+                  onClick={() =>
+                    navigate(
+                      `/orders/${order._id}`
+                    )
+                  }
+                >
+                  View Details
+                </Button>
+              </div>
+            </Card>
           ))}
-
-          <hr />
-
-          <div
-            style={{
-              display: "flex",
-              justifyContent:
-                "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Text strong>
-              Total: ₹{order.totalAmount}
-            </Text>
-
-            <Button
-              type="primary"
-              onClick={() =>
-                navigate(
-                  `/orders/${order._id}`
-                )
-              }
-            >
-              View Details
-            </Button>
-          </div>
-        </Card>
-      ))}
+        </div>
+      </div>
     </MainLayout>
   );
 };

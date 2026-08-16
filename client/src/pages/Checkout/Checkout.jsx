@@ -32,6 +32,8 @@ import {
 
 import { setCart } from "../../features/cart/cartSlice";
 
+import "./Checkout.css";
+
 const { Title, Text } = Typography;
 
 const Checkout = () => {
@@ -218,415 +220,385 @@ const Checkout = () => {
 
   return (
     <MainLayout>
-      <Title level={2}>Checkout</Title>
+      <div className="checkout-page">
+        <Title level={2} className="checkout-title">
+          Checkout
+        </Title>
 
-      <Row gutter={[30, 30]}>
-        {/* Shipping Address */}
-        <Col xs={24} md={14}>
-          <Card
-            title="Shipping Address"
-            extra={
-              <Button
-                type="link"
-                icon={<PlusOutlined />}
-                onClick={() =>
-                  setAddressModalOpen(true)
-                }
-              >
-                Add New Address
-              </Button>
-            }
-          >
-            {addressLoading ? (
-              <Text type="secondary">
-                Loading addresses...
-              </Text>
-            ) : addresses.length === 0 ? (
-              <div
-                style={{
-                  textAlign: "center",
-                  padding: "30px 10px",
-                }}
-              >
-                <EnvironmentOutlined
-                  style={{
-                    fontSize: 40,
-                    marginBottom: 15,
-                  }}
-                />
-
-                <Title level={4}>
-                  No saved addresses
-                </Title>
-
-                <Text type="secondary">
-                  Add a shipping address to
-                  continue with your order.
-                </Text>
-
-                <br />
-
+        <Row gutter={[30, 30]} className="checkout-row">
+          {/* Shipping Address */}
+          <Col xs={24} lg={14}>
+            <Card className="checkout-card"
+              title="Shipping Address"
+              extra={
                 <Button
-                  type="primary"
+                  type="link"
                   icon={<PlusOutlined />}
-                  style={{ marginTop: 20 }}
-                  onClick={() =>
-                    setAddressModalOpen(true)
-                  }
-                >
-                  Add Address
-                </Button>
-              </div>
-            ) : (
-              <>
-                <Radio.Group
-                  value={selectedAddressId}
-                  onChange={(e) =>
-                    setSelectedAddressId(
-                      e.target.value
-                    )
-                  }
-                  style={{ width: "100%" }}
-                >
-                  <Space
-                    direction="vertical"
-                    size={16}
-                    style={{ width: "100%" }}
-                  >
-                    {addresses.map(
-                      (address) => (
-                        <Card
-                          key={address._id}
-                          size="small"
-                          style={{
-                            width: "100%",
-                            border:
-                              selectedAddressId ===
-                              address._id
-                                ? "2px solid #1677ff"
-                                : "1px solid #d9d9d9",
-                            cursor: "pointer",
-                          }}
-                          onClick={() =>
-                            setSelectedAddressId(
-                              address._id
-                            )
-                          }
-                        >
-                          <Radio
-                            value={address._id}
-                          >
-                            <div
-                              style={{
-                                marginLeft: 8,
-                              }}
-                            >
-                              <div
-                                style={{
-                                  marginBottom: 8,
-                                }}
-                              >
-                                <Text strong>
-                                  {address.label}
-                                </Text>
-
-                                {address.isDefault && (
-                                  <Tag
-                                    color="green"
-                                    style={{
-                                      marginLeft: 8,
-                                    }}
-                                  >
-                                    Default
-                                  </Tag>
-                                )}
-                              </div>
-
-                              <Text strong>
-                                {
-                                  address.firstName
-                                }{" "}
-                                {
-                                  address.lastName
-                                }
-                              </Text>
-
-                              <br />
-
-                              <Text type="secondary">
-                                {address.phone}
-                              </Text>
-
-                              <br />
-
-                              <Text>
-                                {
-                                  address.address
-                                }
-                              </Text>
-
-                              <br />
-
-                              <Text>
-                                {address.city},{" "}
-                                {address.state} -{" "}
-                                {address.pincode}
-                              </Text>
-                            </div>
-                          </Radio>
-                        </Card>
-                      )
-                    )}
-                  </Space>
-                </Radio.Group>
-
-                <Button
-                  type="dashed"
-                  block
-                  icon={<PlusOutlined />}
-                  style={{
-                    marginTop: 20,
-                  }}
                   onClick={() =>
                     setAddressModalOpen(true)
                   }
                 >
                   Add New Address
                 </Button>
-              </>
-            )}
+              }
+            >
+              {addressLoading ? (
+                <Text type="secondary">
+                  Loading addresses...
+                </Text>
+              ) : addresses.length === 0 ? (
+                <div className="checkout-no-address">
+                  <EnvironmentOutlined
+                    style={{
+                      fontSize: 40,
+                      marginBottom: 15,
+                    }}
+                  />
 
-            {addresses.length > 0 && (
-              <Button
-                type="primary"
-                size="large"
-                block
-                loading={loading}
-                disabled={!selectedAddressId}
-                style={{
-                  marginTop: 25,
-                }}
-                onClick={handleSubmit}
-              >
-                Place Order
-              </Button>
-            )}
-          </Card>
-        </Col>
+                  <Title level={4}>
+                    No saved addresses
+                  </Title>
 
-        {/* Order Summary */}
-        <Col xs={24} md={10}>
-          <Card title="Order Summary">
-            {items.map((item) => (
-              <div
-                key={item.product._id}
-                style={{
-                  display: "flex",
-                  justifyContent:
-                    "space-between",
-                  marginBottom: 15,
-                }}
-              >
-                <div>
-                  <Text strong>
-                    {item.product.title}
+                  <Text type="secondary">
+                    Add a shipping address to
+                    continue with your order.
                   </Text>
 
                   <br />
 
-                  <Text type="secondary">
-                    Qty: {item.quantity}
+                  <Button
+                    type="primary"
+                    icon={<PlusOutlined />}
+                    className="checkout-add-address-button"
+                    onClick={() =>
+                      setAddressModalOpen(true)
+                    }
+                  >
+                    Add Address
+                  </Button>
+                </div>
+              ) : (
+                <>
+                  <Radio.Group
+                    value={selectedAddressId}
+                    onChange={(e) =>
+                      setSelectedAddressId(
+                        e.target.value
+                      )
+                    }
+                    style={{ width: "100%" }}
+                  >
+                    <Space
+                      direction="vertical"
+                      size={16}
+                      style={{ width: "100%" }}
+                    >
+                      {addresses.map(
+                        (address) => (
+                          <Card
+                            key={address._id}
+                            size="small"
+                            className={`checkout-address-card ${
+                              selectedAddressId === address._id
+                                ? "selected"
+                                : ""
+                            }`}
+                            onClick={() =>
+                              setSelectedAddressId(
+                                address._id
+                              )
+                            }
+                          >
+                            <Radio
+                              value={address._id}
+                            >
+                              <div className="checkout-address-content">
+                                <div className="checkout-address-header"
+                                >
+                                  <Text strong>
+                                    {address.label}
+                                  </Text>
+
+                                  {address.isDefault && (
+                                    <Tag
+                                      color="green" className="checkout-default-tag"
+                                    >
+                                      Default
+                                    </Tag>
+                                  )}
+                                </div>
+
+                                <Text strong>
+                                  {
+                                    address.firstName
+                                  }{" "}
+                                  {
+                                    address.lastName
+                                  }
+                                </Text>
+
+                                <br />
+
+                                <Text type="secondary">
+                                  {address.phone}
+                                </Text>
+
+                                <br />
+
+                                <Text>
+                                  {
+                                    address.address
+                                  }
+                                </Text>
+
+                                <br />
+
+                                <Text>
+                                  {address.city},{" "}
+                                  {address.state} -{" "}
+                                  {address.pincode}
+                                </Text>
+                              </div>
+                            </Radio>
+                          </Card>
+                        )
+                      )}
+                    </Space>
+                  </Radio.Group>
+
+                  <Button
+                    type="dashed"
+                    block
+                    icon={<PlusOutlined />}
+                    className="checkout-add-address-button"
+                    onClick={() =>
+                      setAddressModalOpen(true)
+                    }
+                  >
+                    Add New Address
+                  </Button>
+                </>
+              )}
+
+              {addresses.length > 0 && (
+                <Button
+                  type="primary"
+                  size="large"
+                  block
+                  loading={loading}
+                  disabled={!selectedAddressId}
+                  className="checkout-place-order"
+                  onClick={handleSubmit}
+                >
+                  Place Order
+                </Button>
+              )}
+            </Card>
+          </Col>
+
+          {/* Order Summary */}
+          <Col xs={24} lg={10}>
+            <Card title="Order Summary" className="checkout-card checkout-summary">
+              {items.map((item) => (
+                <div
+                  key={item.product._id}
+                  className="checkout-summary-item"
+                >
+                  <div>
+                    <Text strong>
+                      {item.product.title}
+                    </Text>
+
+                    <br />
+
+                    <Text type="secondary">
+                      Qty: {item.quantity}
+                    </Text>
+                  </div>
+
+                  <Text>
+                    ₹
+                    {item.product.price *
+                      item.quantity}
                   </Text>
                 </div>
+              ))}
 
-                <Text>
-                  ₹
-                  {item.product.price *
-                    item.quantity}
-                </Text>
+              <Divider />
+
+              <div
+                className="checkout-total"
+              >
+                <Title level={4}>
+                  Total
+                </Title>
+
+                <Title level={4}>
+                  ₹{total}
+                </Title>
               </div>
-            ))}
+            </Card>
+          </Col>
+        </Row>
 
-            <Divider />
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent:
-                  "space-between",
-              }}
-            >
-              <Title level={4}>
-                Total
-              </Title>
-
-              <Title level={4}>
-                ₹{total}
-              </Title>
-            </div>
-          </Card>
-        </Col>
-      </Row>
-
-      {/* Add Address Modal */}
-      <Modal
-        title="Add New Address"
-        open={addressModalOpen}
-        onCancel={() => {
-          setAddressModalOpen(false);
-          addressForm.resetFields();
-        }}
-        footer={null}
-        destroyOnHidden
-      >
-        <Form
-          form={addressForm}
-          layout="vertical"
-          onFinish={handleAddAddress}
+        {/* Add Address Modal */}
+        <Modal
+          title="Add New Address"
+          open={addressModalOpen}
+          onCancel={() => {
+            setAddressModalOpen(false);
+            addressForm.resetFields();
+          }}
+          footer={null}
+          destroyOnHidden
         >
-          <Form.Item
-            label="Address Type"
-            name="label"
-            initialValue="Home"
+          <Form
+            form={addressForm}
+            layout="vertical"
+            onFinish={handleAddAddress}
           >
-            <Select
-              options={[
+            <Form.Item
+              label="Address Type"
+              name="label"
+              initialValue="Home"
+            >
+              <Select
+                options={[
+                  {
+                    value: "Home",
+                    label: "Home",
+                  },
+                  {
+                    value: "Work",
+                    label: "Work",
+                  },
+                  {
+                    value: "Other",
+                    label: "Other",
+                  },
+                ]}
+              />
+            </Form.Item>
+
+            <Row gutter={16}>
+              <Col xs={24} sm={12}>
+                <Form.Item
+                  label="First Name"
+                  name="firstName"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Enter first name",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+
+              <Col xs={24} sm={12}>
+                <Form.Item
+                  label="Last Name"
+                  name="lastName"
+                  rules={[
+                    {
+                      required: true,
+                      message:
+                        "Enter last name",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Form.Item
+              label="Phone"
+              name="phone"
+              rules={[
                 {
-                  value: "Home",
-                  label: "Home",
-                },
-                {
-                  value: "Work",
-                  label: "Work",
-                },
-                {
-                  value: "Other",
-                  label: "Other",
+                  required: true,
+                  message: "Enter phone number",
                 },
               ]}
-            />
-          </Form.Item>
+            >
+              <Input />
+            </Form.Item>
 
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                label="First Name"
-                name="firstName"
-                rules={[
-                  {
-                    required: true,
-                    message:
-                      "Enter first name",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
+            <Form.Item
+              label="Address"
+              name="address"
+              rules={[
+                {
+                  required: true,
+                  message: "Enter address",
+                },
+              ]}
+            >
+              <Input.TextArea rows={3} />
+            </Form.Item>
 
-            <Col span={12}>
-              <Form.Item
-                label="Last Name"
-                name="lastName"
-                rules={[
-                  {
-                    required: true,
-                    message:
-                      "Enter last name",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
+            <Row gutter={16}>
+              <Col xs={24} sm={8}>
+                <Form.Item
+                  label="City"
+                  name="city"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Enter city",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
 
-          <Form.Item
-            label="Phone"
-            name="phone"
-            rules={[
-              {
-                required: true,
-                message:
-                  "Enter phone number",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
+              <Col xs={24} sm={8}>
+                <Form.Item
+                  label="State"
+                  name="state"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Enter state",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
 
-          <Form.Item
-            label="Address"
-            name="address"
-            rules={[
-              {
-                required: true,
-                message: "Enter address",
-              },
-            ]}
-          >
-            <Input.TextArea rows={3} />
-          </Form.Item>
+              <Col xs={24} sm={8}>
+                <Form.Item
+                  label="Pincode"
+                  name="pincode"
+                  rules={[
+                    {
+                      required: true,
+                      message:
+                        "Enter pincode",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+            </Row>
 
-          <Row gutter={16}>
-            <Col span={8}>
-              <Form.Item
-                label="City"
-                name="city"
-                rules={[
-                  {
-                    required: true,
-                    message: "Enter city",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-
-            <Col span={8}>
-              <Form.Item
-                label="State"
-                name="state"
-                rules={[
-                  {
-                    required: true,
-                    message: "Enter state",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-
-            <Col span={8}>
-              <Form.Item
-                label="Pincode"
-                name="pincode"
-                rules={[
-                  {
-                    required: true,
-                    message:
-                      "Enter pincode",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Button
-            type="primary"
-            htmlType="submit"
-            block
-            size="large"
-            loading={addressSaving}
-          >
-            Save Address
-          </Button>
-        </Form>
-      </Modal>
+            <Button
+              type="primary"
+              htmlType="submit"
+              block
+              size="large"
+              loading={addressSaving}
+            >
+              Save Address
+            </Button>
+          </Form>
+        </Modal>
+      </div>
     </MainLayout>
   );
 };

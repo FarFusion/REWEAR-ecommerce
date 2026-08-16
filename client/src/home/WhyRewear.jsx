@@ -6,20 +6,9 @@ const { Title, Paragraph } = Typography;
 
 const WhyRewear = () => {
   return (
-    <section
-        style={{
-          padding: "50px 20px",
-          background: "#fafafa",
-          borderRadius: 16,
-          marginBottom: 60,
-        }}
-    >
-        <Title
+    <section className="why-rewear">
+        <Title className="why-rewear-title"
           level={2}
-          style={{
-            textAlign: "center",
-            marginBottom: 40,
-          }}
         >
           Why ReWear?
         </Title>

@@ -47,6 +47,8 @@ import {
   deleteReview,
 } from "../../services/reviewService";
 
+import "./ProductDetails.css";
+
 
 
 
@@ -272,352 +274,285 @@ const ProductDetails = () => {
   // -------------------------
   return (
     <MainLayout>
-      <Row gutter={40}>
-        <Col xs={24} md={10}>
-        {/* Main Image */}
-        <div
-            style={{
-            border: "1px solid #f0f0f0",
-            borderRadius: 8,
-            padding: 10,
-            background: "#fff",
-            }}
+      <div className="product-details-page">
+        {/* Product Information */}
+        <Row
+          gutter={[
+            { xs: 0, md: 40 },
+            { xs: 24, md: 40 },
+          ]}
         >
-            <Image
-            width="100%"
-            height={450}
-            src={
-                product.images?.length
-                ? product.images[selectedImage]?.url
-                : "https://placehold.co/600x500?text=No+Image"
-            }
-            fallback="https://placehold.co/600x500?text=No+Image"
-            style={{
-                objectFit: "contain",
-                borderRadius: 6,
-            }}
-            />
-        </div>
+          {/* Images */}
+          <Col xs={24} md={10}>
+            <div className="product-image-container">
+              <Image
+                width="100%"
+                src={
+                  product.images?.length
+                    ? product.images[selectedImage]?.url
+                    : "https://placehold.co/600x500?text=No+Image"
+                }
+                fallback="https://placehold.co/600x500?text=No+Image"
+                className="product-main-image"
+                preview
+              />
+            </div>
 
-        {/* Thumbnails */}
-        {product.images?.length > 1 && (
-            <div
-            style={{
-                display: "flex",
-                gap: 10,
-                marginTop: 15,
-                overflowX: "auto",
-                paddingBottom: 5,
-            }}
-            >
-            {product.images.map((image, index) => (
-                <div
-                key={image.public_id || index}
-                onClick={() => setSelectedImage(index)}
-                style={{
-                    width: 75,
-                    height: 75,
-                    flexShrink: 0,
-                    border:
-                    selectedImage === index
-                        ? "2px solid #1677ff"
-                        : "1px solid #d9d9d9",
-                    borderRadius: 6,
-                    padding: 3,
-                    cursor: "pointer",
-                }}
-                >
-                <img
-                    src={image.url}
-                    alt={`${product.title} ${index + 1}`}
-                    style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    borderRadius: 4,
-                    }}
+            {/* Thumbnails */}
+            {product.images?.length > 1 && (
+              <div className="product-thumbnails">
+                {product.images.map((image, index) => (
+                  <div
+                    key={image.public_id || index}
+                    onClick={() => setSelectedImage(index)}
+                    className={`product-thumbnail ${
+                      selectedImage === index
+                        ? "active"
+                        : ""
+                    }`}
+                  >
+                    <img
+                      src={image.url}
+                      alt={`${product.title} ${index + 1}`}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </Col>
+
+          {/* Product Information */}
+          <Col xs={24} md={14}>
+            <div className="product-info">
+              <Title className="product-title">
+                {product.title}
+              </Title>
+
+              {/* Rating */}
+              <div className="product-rating">
+                <Rate
+                  disabled
+                  allowHalf
+                  value={product.averageRating || 0}
                 />
-                </div>
-            ))}
+
+                <span className="rating-value">
+                  {product.averageRating
+                    ? product.averageRating.toFixed(1)
+                    : "No rating"}
+                </span>
+
+                <span className="review-count">
+                  ({product.numReviews || 0} reviews)
+                </span>
+              </div>
+
+              {/* Tags */}
+              <div className="product-tags">
+                <Tag color="blue">
+                  {product.condition}
+                </Tag>
+
+                <Tag>{product.brand}</Tag>
+              </div>
+
+              {/* Price */}
+              <Title
+                level={2}
+                className="product-price"
+              >
+                ₹{product.price}
+              </Title>
+
+              {product.originalPrice && (
+                <Paragraph className="original-price">
+                  ₹{product.originalPrice}
+                </Paragraph>
+              )}
+
+              {/* Description */}
+              <Paragraph className="product-description">
+                {product.description}
+              </Paragraph>
+
+              {/* Actions */}
+              <div className="product-actions">
+                <Button
+                  type="primary"
+                  size="large"
+                  icon={<ShoppingCartOutlined />}
+                  onClick={handleAddToCart}
+                >
+                  Add to Cart
+                </Button>
+
+                <Button
+                  size="large"
+                  icon={
+                    isWishlisted ? (
+                      <HeartFilled />
+                    ) : (
+                      <HeartOutlined />
+                    )
+                  }
+                  onClick={handleWishlist}
+                >
+                  {isWishlisted
+                    ? "Remove from Wishlist"
+                    : "Wishlist"}
+                </Button>
+
+                <Button
+                  size="large"
+                  icon={<ShoppingCartOutlined />}
+                  onClick={() => navigate("/checkout")}
+                >
+                  Buy Now
+                </Button>
+              </div>
             </div>
-        )}
-        </Col>
+          </Col>
+        </Row>
 
-        <Col xs={24} md={14}>
-          <Title>{product.title}</Title>
+        <Divider />
 
-            <div style={{ marginBottom: 12 }}>
-            <Rate
-                disabled
-                allowHalf
-                value={product.averageRating || 0}
-            />
-
-            <span style={{ marginLeft: 10 }}>
-                {product.averageRating
-                ? product.averageRating.toFixed(1)
-                : "No rating"}
-            </span>
-
-            <span
-                style={{
-                marginLeft: 8,
-                color: "#888",
-                }}
+        {/* Reviews */}
+        <Card
+          title={`Customer Reviews (${product.numReviews || 0})`}
+          className="reviews-card"
+        >
+          {/* Write Review */}
+          {token ? (
+            <Card
+              type="inner"
+              title="Write a Review"
+              className="write-review-card"
             >
-                ({product.numReviews || 0} reviews)
-            </span>
-            </div>
+              <Form
+                form={form}
+                layout="vertical"
+                onFinish={handleCreateReview}
+              >
+                <Form.Item
+                  name="rating"
+                  label="Rating"
+                  rules={[
+                    {
+                      required: true,
+                      message:
+                        "Please select a rating",
+                    },
+                  ]}
+                >
+                  <Rate />
+                </Form.Item>
 
-          <Tag color="blue">
-            {product.condition}
-          </Tag>
+                <Form.Item
+                  name="comment"
+                  label="Your Review"
+                  rules={[
+                    {
+                      required: true,
+                      message:
+                        "Please write a review",
+                    },
+                  ]}
+                >
+                  <Input.TextArea
+                    rows={4}
+                    placeholder="Share your experience with this product..."
+                  />
+                </Form.Item>
 
-          <Tag>
-            {product.brand}
-          </Tag>
-
-          <Title level={2}>
-            ₹{product.price}
-          </Title>
-
-          {product.originalPrice && (
-            <Paragraph
-              delete
-              style={{
-                fontSize: 18,
-              }}
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                >
+                  Submit Review
+                </Button>
+              </Form>
+            </Card>
+          ) : (
+            <Card
+              type="inner"
+              className="login-review-card"
             >
-              ₹{product.originalPrice}
-            </Paragraph>
+              Please login to write a review.
+            </Card>
           )}
 
-          <Paragraph>
-            {product.description}
-          </Paragraph>
+          {/* Reviews List */}
+          {reviewLoading ? (
+            <div className="reviews-loading">
+              <Spin />
+            </div>
+          ) : reviews.length === 0 ? (
+            <div className="no-reviews">
+              No reviews yet. Be the first to
+              review this product!
+            </div>
+          ) : (
+            reviews.map((review) => {
+              const isOwner =
+                currentUser &&
+                review.user?._id === currentUser._id;
 
-          <div
-            style={{
-              display: "flex",
-              gap: 12,
-              marginTop: 20,
-            }}
-          >
-            <Button
-              type="primary"
-              size="large"
-              icon={<ShoppingCartOutlined />}
-              onClick={handleAddToCart}
-            >
-              Add to Cart
-            </Button>
-
-            <Button
-              size="large"
-              icon={
-                isWishlisted
-                  ? <HeartFilled />
-                  : <HeartOutlined />
-              }
-              onClick={handleWishlist}
-            >
-              {isWishlisted
-                ? "Remove from Wishlist"
-                : "Wishlist"}
-            </Button>
-            
-            <Button
-              size="large"
-              icon={<ShoppingCartOutlined />}
-              onClick={()=>navigate("/checkout")}
-            >
-              Buy Now
-            </Button>
-
-          </div>
-        </Col>
-      </Row>
-
-      <Divider />
-
-      <Card
-        title={`Customer Reviews (${product.numReviews || 0})`}
-        style={{
-          marginTop: 30,
-          marginBottom: 30,
-        }}
-      >
-        {/* Write Review */}
-
-        {token ? (
-          <Card
-            type="inner"
-            title="Write a Review"
-            style={{
-              marginBottom: 25,
-            }}
-          >
-            <Form
-              form={form}
-              layout="vertical"
-              onFinish={handleCreateReview}
-            >
-              <Form.Item
-                name="rating"
-                label="Rating"
-                rules={[
-                  {
-                    required: true,
-                    message:
-                      "Please select a rating",
-                  },
-                ]}
-              >
-                <Rate />
-              </Form.Item>
-
-              <Form.Item
-                name="comment"
-                label="Your Review"
-                rules={[
-                  {
-                    required: true,
-                    message:
-                      "Please write a review",
-                  },
-                ]}
-              >
-                <Input.TextArea
-                  rows={4}
-                  placeholder="Share your experience with this product..."
-                />
-              </Form.Item>
-
-              <Button
-                type="primary"
-                htmlType="submit"
-              >
-                Submit Review
-              </Button>
-            </Form>
-          </Card>
-        ) : (
-          <Card
-            type="inner"
-            style={{
-              marginBottom: 25,
-              textAlign: "center",
-            }}
-          >
-            Please login to write a review.
-          </Card>
-        )}
-
-        {/* Reviews List */}
-
-        {reviewLoading ? (
-          <div
-            style={{
-              textAlign: "center",
-              padding: 30,
-            }}
-          >
-            <Spin />
-          </div>
-        ) : reviews.length === 0 ? (
-          <div
-            style={{
-              textAlign: "center",
-              padding: 30,
-              color: "#888",
-            }}
-          >
-            No reviews yet. Be the first to
-            review this product!
-          </div>
-        ) : (
-          reviews.map((review) => {
-            const isOwner =
-              currentUser &&
-              review.user?._id === currentUser._id;
-
-            return (
-              <Card
-                key={review._id}
-                style={{
-                  marginBottom: 15,
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start",
-                  }}
+              return (
+                <Card
+                  key={review._id}
+                  className="review-card"
                 >
-                  <div>
-                    <Typography.Text strong>
-                      {review.user?.firstName}{" "}
-                      {review.user?.lastName}
-                    </Typography.Text>
+                  <div className="review-header">
+                    <div>
+                      <Typography.Text strong>
+                        {review.user?.firstName}{" "}
+                        {review.user?.lastName}
+                      </Typography.Text>
 
-                    <div
-                      style={{
-                        marginTop: 5,
-                      }}
-                    >
-                      <Rate
-                        disabled
-                        value={review.rating}
-                      />
+                      <div className="review-rating">
+                        <Rate
+                          disabled
+                          value={review.rating}
+                        />
+                      </div>
                     </div>
+
+                    {isOwner && (
+                      <Button
+                        danger
+                        type="text"
+                        onClick={() =>
+                          handleDeleteReview(
+                            review._id
+                          )
+                        }
+                      >
+                        Delete
+                      </Button>
+                    )}
                   </div>
 
-                  {isOwner && (
-                    <Button
-                      danger
-                      type="text"
-                      onClick={() =>
-                        handleDeleteReview(
-                          review._id
-                        )
-                      }
+                  <Paragraph className="review-comment">
+                    {review.comment}
+                  </Paragraph>
+
+                  {review.createdAt && (
+                    <Typography.Text
+                      type="secondary"
+                      className="review-date"
                     >
-                      Delete
-                    </Button>
+                      {new Date(
+                        review.createdAt
+                      ).toLocaleDateString()}
+                    </Typography.Text>
                   )}
-                </div>
-
-                <Paragraph
-                  style={{
-                    marginTop: 12,
-                    marginBottom: 0,
-                  }}
-                >
-                  {review.comment}
-                </Paragraph>
-
-                {review.createdAt && (
-                  <Typography.Text
-                    type="secondary"
-                    style={{
-                      display: "block",
-                      marginTop: 10,
-                      fontSize: 12,
-                    }}
-                  >
-                    {new Date(
-                      review.createdAt
-                    ).toLocaleDateString()}
-                  </Typography.Text>
-                )}
-              </Card>
-            );
-          })
-        )}
-      </Card>
+                </Card>
+              );
+            })
+          )}
+        </Card>
+      </div>
     </MainLayout>
-
   );
 };
 

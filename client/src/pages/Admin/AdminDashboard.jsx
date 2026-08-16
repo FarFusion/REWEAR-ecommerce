@@ -18,10 +18,13 @@ import {
   DollarOutlined,
 } from "@ant-design/icons";
 
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import MainLayout from "../../layouts/MainLayout";
 import { getDashboardStats } from "../../services/adminDashboardService";
+import "./AdminDashboard.css";
+
+
 
 const { Title } = Typography;
 
@@ -146,176 +149,184 @@ const AdminDashboard = () => {
 
   return (
     <MainLayout>
-      <Title level={2}>
-        Admin Dashboard
-      </Title>
+      <div className="admin-dashboard">
+        <Title level={2} className="admin-dashboard-title">
+          Admin Dashboard
+        </Title>
 
-      {/* Statistics */}
+        {/* Statistics */}
 
-      <Row
-        gutter={[16, 16]}
-        style={{ marginBottom: 24 }}
-      >
-        <Col xs={24} sm={12} lg={6}>
-          <Card 
-            loading={loading} 
-            hoverable
-            onClick={()=>navigate("/admin/users")}
-            style={{ cursor: "pointer" }}  
-          >
-            <Statistic
-              title="Total Users"
-              value={totalUsers}
-              prefix={<UserOutlined />}
-            />
-          </Card>
-        </Col>
-
-        <Col xs={24} sm={12} lg={6}>
-          <Card 
-            loading={loading}
-            hoverable
-            onClick={()=>navigate("/admin/products")}
-            style={{cursor: "pointer"}}
+        <Row
+          gutter={[16, 16]}
+          className="admin-statistics"
+        >
+          <Col xs={24} sm={12} lg={6}>
+            <Card
+              loading={loading}
+              hoverable
+              onClick={() => navigate("/admin/users")}
+              className="admin-stat-card"
             >
-            <Statistic
-              title="Total Products"
-              value={totalProducts}
-              prefix={<ShoppingOutlined />}
-            />
-          </Card>
-        </Col>
+              <Statistic
+                title="Total Users"
+                value={totalUsers}
+                prefix={<UserOutlined />}
+              />
+            </Card>
+          </Col>
 
-        <Col xs={24} sm={12} lg={6}>
-          <Card 
-            loading={loading}
-            hoverable
-            onClick={()=>navigate("/admin/orders")}
+          <Col xs={24} sm={12} lg={6}>
+            <Card
+              loading={loading}
+              hoverable
+              onClick={() => navigate("/admin/products")}
+              className="admin-stat-card"
             >
-            <Statistic
-              title="Total Orders"
-              value={totalOrders}
-              prefix={<ShoppingCartOutlined />}
-            />
-          </Card>
-        </Col>
+              <Statistic
+                title="Total Products"
+                value={totalProducts}
+                prefix={<ShoppingOutlined />}
+              />
+            </Card>
+          </Col>
 
-        <Col xs={24} sm={12} lg={6}>
-          <Card loading={loading}>
-            <Statistic
-              title="Total Revenue"
-              value={totalRevenue}
-              prefix="₹"
-              precision={2}
-            />
-          </Card>
-        </Col>
-      </Row>
+          <Col xs={24} sm={12} lg={6}>
+            <Card
+              loading={loading}
+              hoverable
+              onClick={() => navigate("/admin/orders")}
+              className="admin-stat-card"
+            >
+              <Statistic
+                title="Total Orders"
+                value={totalOrders}
+                prefix={<ShoppingCartOutlined />}
+              />
+            </Card>
+          </Col>
 
-      {/* Order Status */}
+          <Col xs={24} sm={12} lg={6}>
+            <Card
+              loading={loading}
+              className="admin-stat-card"
+            >
+              <Statistic
+                title="Total Revenue"
+                value={totalRevenue}
+                prefix="₹"
+                precision={2}
+              />
+            </Card>
+          </Col>
+        </Row>
 
-      <Title level={4}>
-        Order Status
-      </Title>
+        {/* Order Status */}
 
-      <Row
-        gutter={[16, 16]}
-        style={{ marginBottom: 30 }}
-      >
-        <Col xs={12} sm={8} lg={4}>
-          <Card>
-            <Statistic
-              title="Confirmed"
-              value={confirmed}
-            />
-          </Card>
-        </Col>
+        <Title level={4} className="admin-section-title">
+          Order Status
+        </Title>
 
-        <Col xs={12} sm={8} lg={4}>
-          <Card>
-            <Statistic
-              title="Shipped"
-              value={shipped}
-            />
-          </Card>
-        </Col>
+        <Row
+          gutter={[16, 16]}
+          className="admin-order-status"
+        >
+          <Col xs={12} sm={8} lg={4}>
+            <Card>
+              <Statistic
+                title="Confirmed"
+                value={confirmed}
+              />
+            </Card>
+          </Col>
 
-        <Col xs={12} sm={8} lg={4}>
-          <Card>
-            <Statistic
-              title="Delivered"
-              value={delivered}
-            />
-          </Card>
-        </Col>
+          <Col xs={12} sm={8} lg={4}>
+            <Card>
+              <Statistic
+                title="Shipped"
+                value={shipped}
+              />
+            </Card>
+          </Col>
 
-        <Col xs={12} sm={8} lg={4}>
-          <Card>
-            <Statistic
-              title="Cancelled"
-              value={cancelled}
-            />
-          </Card>
-        </Col>
-      </Row>
+          <Col xs={12} sm={8} lg={4}>
+            <Card>
+              <Statistic
+                title="Delivered"
+                value={delivered}
+              />
+            </Card>
+          </Col>
 
-      {/* Quick Actions */}
+          <Col xs={12} sm={8} lg={4}>
+            <Card>
+              <Statistic
+                title="Cancelled"
+                value={cancelled}
+              />
+            </Card>
+          </Col>
+        </Row>
 
-      <Title level={4}>
-        Quick Actions
-      </Title>
+        {/* Quick Actions */}
 
-      <Row
-        gutter={[12, 12]}
-        style={{ marginBottom: 30 }}
-      >
-        <Col>
-          <Link to="/admin/users">
-            <Button type="primary">
-              Manage Users
-            </Button>
-          </Link>
-        </Col>
+        <Title level={4} className="admin-section-title">
+          Quick Actions
+        </Title>
 
-        <Col>
-          <Link to="/admin/products">
-            <Button>
-              Manage Products
-            </Button>
-          </Link>
-        </Col>
+        <Row
+          gutter={[12, 12]}
+          className="admin-quick-actions"
+        >
+          <Col xs={24} sm={12} md={6}>
+            <Link to="/admin/users">
+              <Button type="primary" block>
+                Manage Users
+              </Button>
+            </Link>
+          </Col>
 
-        <Col>
-          <Link to="/admin/orders">
-            <Button>
-              Manage Orders
-            </Button>
-          </Link>
-        </Col>
+          <Col xs={24} sm={12} md={6}>
+            <Link to="/admin/products">
+              <Button block>
+                Manage Products
+              </Button>
+            </Link>
+          </Col>
 
-        <Col>
-          <Link to="/admin/categories">
-            <Button>
-              Manage Categories
-            </Button>
-          </Link>
-        </Col>
-      </Row>
+          <Col xs={24} sm={12} md={6}>
+            <Link to="/admin/orders">
+              <Button block>
+                Manage Orders
+              </Button>
+            </Link>
+          </Col>
 
-      {/* Recent Orders */}
+          <Col xs={24} sm={12} md={6}>
+            <Link to="/admin/categories">
+              <Button block>
+                Manage Categories
+              </Button>
+            </Link>
+          </Col>
+        </Row>
 
-      <Title level={4}>
-        Recent Orders
-      </Title>
+        {/* Recent Orders */}
 
-      <Table
-        rowKey="_id"
-        columns={columns}
-        dataSource={data.recentOrders}
-        loading={loading}
-        pagination={false}
-        scroll={{ x: 800 }}
-      />
+        <Title level={4} className="admin-section-title">
+          Recent Orders
+        </Title>
+
+        <div className="admin-orders-table">
+          <Table
+            rowKey="_id"
+            columns={columns}
+            dataSource={data.recentOrders}
+            loading={loading}
+            pagination={false}
+            scroll={{ x: 800 }}
+          />
+        </div>
+      </div>
     </MainLayout>
   );
 };

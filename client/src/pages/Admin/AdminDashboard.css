@@ -1,0 +1,116 @@
+.admin-dashboard {
+  width: 100%;
+}
+
+.admin-dashboard-title {
+  margin-bottom: 24px !important;
+}
+
+.admin-statistics {
+  margin-bottom: 30px;
+}
+
+.admin-stat-card {
+  height: 100%;
+  cursor: pointer;
+}
+
+.admin-order-status {
+  margin-bottom: 30px;
+}
+
+.admin-section-title {
+  margin-bottom: 16px !important;
+}
+
+.admin-quick-actions {
+  margin-bottom: 30px;
+}
+
+.admin-quick-actions a {
+  display: block;
+  width: 100%;
+}
+
+.admin-orders-table {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .admin-dashboard-title {
+    font-size: 28px !important;
+  }
+
+  .admin-stat-card {
+    min-height: 120px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .admin-dashboard-title {
+    font-size: 24px !important;
+    margin-bottom: 18px !important;
+  }
+
+  .admin-section-title {
+    font-size: 18px !important;
+    margin-top: 20px !important;
+  }
+
+  .admin-statistics {
+    margin-bottom: 24px;
+  }
+
+  .admin-stat-card {
+    min-height: auto;
+  }
+
+  .admin-order-status {
+    margin-bottom: 24px;
+  }
+
+  .admin-quick-actions {
+    margin-bottom: 24px;
+  }
+
+  .admin-orders-table {
+    margin-top: 10px;
+  }
+
+  .admin-orders-table .ant-table {
+    font-size: 13px;
+  }
+
+  .admin-orders-table .ant-table-thead > tr > th,
+  .admin-orders-table .ant-table-tbody > tr > td {
+    padding: 10px 8px;
+    white-space: nowrap;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 380px) {
+  .admin-dashboard-title {
+    font-size: 22px !important;
+  }
+
+  .admin-section-title {
+    font-size: 17px !important;
+  }
+
+  .admin-stat-card .ant-statistic-title {
+    font-size: 13px;
+  }
+
+  .admin-stat-card .ant-statistic-content {
+    font-size: 22px;
+  }
+
+  .admin-orders-table .ant-table-thead > tr > th,
+  .admin-orders-table .ant-table-tbody > tr > td {
+    padding: 8px 6px;
+  }
+}

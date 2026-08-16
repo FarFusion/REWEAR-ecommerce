@@ -1,0 +1,38 @@
+
+/* == WHY REWEAR == */
+
+.why-rewear {
+  padding: 50px 20px;
+  background: #fafafa;
+  border-radius: 16px;
+  margin-bottom: 60px;
+}
+
+.why-rewear-title {
+  text-align: center;
+  margin-bottom: 40px !important;
+}
+
+
+/* == MOBILE == */
+
+@media (max-width: 600px) {
+  .why-rewear {
+    padding: 35px 14px;
+    border-radius: 12px;
+    margin-bottom: 40px;
+  }
+
+  .why-rewear-title {
+    margin-bottom: 25px !important;
+    font-size: 24px !important;
+  }
+
+  .why-rewear .ant-card {
+    padding: 0;
+  }
+
+  .why-rewear .ant-card-body {
+    padding: 20px 16px;
+  }
+}

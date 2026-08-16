@@ -19,6 +19,7 @@ import {
 
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import "./Navbar.css";
 
 const { Header } = Layout;
 const { Search } = Input;
@@ -32,7 +33,6 @@ const Navbar = () => {
   const cartItems = useSelector(
     (state) => state.cart.items
   );
-
   const wishlistItems = useSelector(
     (state) => state.wishlist.items
   );
@@ -136,115 +136,76 @@ const Navbar = () => {
   });
 
   return (
-    <Header
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 30,
-        background: "#fff",
-        padding: "0 40px",
-        borderBottom: "1px solid #f0f0f0",
-        height: 70,
-      }}
-    >
-      {/* LOGO */}
+    <Header className="navbar">
+      <div className="navbar-top">
 
-      <Link
-        to="/"
-        style={{
-          fontSize: 26,
-          fontWeight: "bold",
-          color: "#1677ff",
-          textDecoration: "none",
-          whiteSpace: "nowrap",
-        }}
-      >
-        ReWear
-      </Link>
+        {/* LOGO */}
+        <Link to="/" className="navbar-logo">
+          ReWear
+        </Link>
 
-      {/* SEARCH */}
+        {/* DESKTOP SEARCH */}
 
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
+        <div className="navbar-search navbar-search-desktop"
+        >
+          <Search
+            placeholder="Search refurbished products..."
+            allowClear
+            onSearch={handleSearch}
+          />
+        </div>
+
+        {/* RIGHT SIDE */}
+
+        <div className="navbar-actions">
+          {/* WISHLIST */}
+
+          <Link to={token ? "/wishlist" : "/login"}>
+            <Badge count={wishlistCount} size="small">
+              <HeartOutlined className="navbar-icon"/>
+            </Badge>
+          </Link>
+
+          {/* CART */}
+
+          <Link to={token ? "/cart" : "/login"}>
+            <Badge count={cartCount} size="small">
+              <ShoppingCartOutlined     className="navbar-icon"
+              />
+            </Badge>
+          </Link>
+
+          {/* USER */}
+
+          {token ? (
+            <Dropdown
+              menu={{ items: menuItems }}
+              trigger={["click"]}
+            >
+              <Avatar
+                icon={<UserOutlined />}
+                className="navbar-avatar"
+              />
+            </Dropdown>
+          ) : (
+            <Link to="/login">
+              <Button type="primary" className="navbar-login">
+                Login
+              </Button>
+            </Link>
+          )}
+        </div>
+      </div>
+      
+      {/* MOBILE SEARCH */}
+
+      <div className="navbar-search navbar-search-mobile">
         <Search
-          placeholder="Search refurbished products..."
+          placeholder="Search products"
           allowClear
-          style={{
-            width: "100%",
-            maxWidth: 500,
-          }}
           onSearch={handleSearch}
         />
-      </div>
-
-      {/* RIGHT SIDE */}
-
-      <div
-        style={{
-          display: "flex",
-          gap: 24,
-          alignItems: "center",
-        }}
-      >
-        {/* WISHLIST */}
-
-        <Link to={token ? "/wishlist" : "/login"}>
-          <Badge
-            count={wishlistCount}
-            size="small"
-          >
-            <HeartOutlined
-              style={{
-                fontSize: 24,
-                color: "#000",
-              }}
-            />
-          </Badge>
-        </Link>
-
-        {/* CART */}
-
-        <Link to={token ? "/cart" : "/login"}>
-          <Badge
-            count={cartCount}
-            size="small"
-          >
-            <ShoppingCartOutlined
-              style={{
-                fontSize: 24,
-                color: "#000",
-              }}
-            />
-          </Badge>
-        </Link>
-
-        {/* USER */}
-
-        {token ? (
-          <Dropdown
-            menu={{ items: menuItems }}
-            trigger={["click"]}
-          >
-            <Avatar
-              icon={<UserOutlined />}
-              style={{
-                cursor: "pointer",
-              }}
-            />
-          </Dropdown>
-        ) : (
-          <Link to="/login">
-            <Button type="primary">
-              Login
-            </Button>
-          </Link>
-        )}
-      </div>
+      </div>  
     </Header>
   );
 };

@@ -21,9 +21,7 @@ import {
 
 import { setCart } from "../../features/cart/cartSlice";
 
-
-
-
+import "./Cart.css";
 
 const { Title } = Typography;
 
@@ -52,119 +50,146 @@ const Cart = () => {
     }
   };
 
-    const increaseQty = async (item) => {
+  const increaseQty = async (item) => {
     try {
-        await updateCartItem(
+      await updateCartItem(
         item._id,
         item.quantity + 1
-        );
+      );
 
-        await loadCart();
+      await loadCart();
     } catch (err) {
-        message.error(
-        err.response?.data?.message || "Failed to update quantity"
-        );
+      message.error(
+        err.response?.data?.message ||
+          "Failed to update quantity"
+      );
     }
-    };
+  };
 
-    const decreaseQty = async (item) => {
+  const decreaseQty = async (item) => {
     if (item.quantity === 1) return;
 
     try {
-        await updateCartItem(
+      await updateCartItem(
         item._id,
         item.quantity - 1
-        );
+      );
 
-        await loadCart();
+      await loadCart();
     } catch (err) {
-        message.error(
-        err.response?.data?.message || "Failed to update quantity"
-        );
+      message.error(
+        err.response?.data?.message ||
+          "Failed to update quantity"
+      );
     }
-    };
+  };
 
-    const removeItem = async (itemId) => {
+  const removeItem = async (itemId) => {
     try {
-        await removeCartItem(itemId);
+      await removeCartItem(itemId);
 
-        message.success("Removed from cart");
+      message.success("Removed from cart");
 
-        await loadCart();
+      await loadCart();
     } catch (err) {
-        message.error(
-        err.response?.data?.message || "Failed to remove item"
-        );
+      message.error(
+        err.response?.data?.message ||
+          "Failed to remove item"
+      );
     }
-    };
+  };
 
   if (!items || items.length === 0) {
     return (
       <MainLayout>
-        <Empty description="Your cart is empty" />
+        <div className="cart-empty">
+          <Empty description="Your cart is empty" />
+        </div>
       </MainLayout>
     );
   }
 
   return (
     <MainLayout>
-        <Title level={2}>Shopping Cart</Title>
+      <div className="cart-page">
+        <Title level={2} className="cart-title">
+          Shopping Cart
+        </Title>
 
         <List
-            dataSource={items}
-            renderItem={(item) => (
+          className="cart-list"
+          dataSource={items}
+          renderItem={(item) => (
             <Card
-                key={item._id}
-                style={{ marginBottom: 16 }}
+              key={item._id}
+              className="cart-item-card"
             >
-                <List.Item
+              <List.Item
+                className="cart-list-item"
                 actions={[
-                    <Space key="qty">
+                  <Space
+                    key="qty"
+                    className="cart-quantity"
+                  >
                     <Button
-                        onClick={() => decreaseQty(item)}
-                        disabled={item.quantity <= 1}
+                      onClick={() =>
+                        decreaseQty(item)
+                      }
+                      disabled={item.quantity <= 1}
                     >
-                        -
+                      -
                     </Button>
 
                     <strong>{item.quantity}</strong>
 
                     <Button
-                        onClick={() => increaseQty(item)}
+                      onClick={() =>
+                        increaseQty(item)
+                      }
                     >
-                        +
+                      +
                     </Button>
-                    </Space>,
+                  </Space>,
 
-                    <Button
+                  <Button
                     key="remove"
                     danger
                     onClick={() =>
-                        removeItem(item._id)
+                      removeItem(item._id)
                     }
-                    >
+                  >
                     Remove
-                    </Button>,
+                  </Button>,
                 ]}
-                >
+              >
                 <List.Item.Meta
-                    title={item.product.title}
-                    description={`₹${item.product.price}`}
+                  title={
+                    <span className="cart-product-title">
+                      {item.product.title}
+                    </span>
+                  }
+                  description={
+                    <span className="cart-product-price">
+                      ₹{item.product.price}
+                    </span>
+                  }
                 />
-                </List.Item>
+              </List.Item>
             </Card>
-            )}
+          )}
         />
 
-        <Button
+        <div className="cart-checkout">
+          <Button
             type="primary"
             size="large"
             block
             onClick={() => navigate("/checkout")}
-        >
+          >
             Proceed to Checkout
-        </Button>
-
+          </Button>
+        </div>
+      </div>
     </MainLayout>
   );
 };

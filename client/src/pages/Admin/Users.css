@@ -1,0 +1,67 @@
+.admin-users {
+  width: 100%;
+}
+
+.admin-users-title {
+  margin-bottom: 24px;
+}
+
+.admin-users-table {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .admin-users-title {
+    font-size: 24px;
+  }
+
+  .admin-users-table {
+    overflow-x: auto;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .admin-users-title {
+    font-size: 21px;
+    margin-bottom: 16px;
+  }
+
+  .admin-users-table {
+    margin: 0 -4px;
+  }
+
+  .admin-users-table .ant-table {
+    font-size: 13px;
+  }
+
+  .admin-users-table .ant-table-thead > tr > th,
+  .admin-users-table .ant-table-tbody > tr > td {
+    padding: 10px 8px;
+    white-space: nowrap;
+  }
+
+  .admin-users-table .ant-btn {
+    font-size: 12px;
+    padding: 4px 10px;
+    height: auto;
+  }
+
+  .admin-users-table .ant-select {
+    font-size: 12px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 380px) {
+  .admin-users-title {
+    font-size: 19px;
+  }
+
+  .admin-users-table .ant-table-thead > tr > th,
+  .admin-users-table .ant-table-tbody > tr > td {
+    padding: 8px 6px;
+  }
+}

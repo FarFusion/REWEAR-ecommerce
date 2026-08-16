@@ -1,0 +1,444 @@
+.profile-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 0 40px;
+}
+
+/* Profile Header */
+
+.profile-header-card {
+  margin-bottom: 24px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.profile-header-card .ant-card-body {
+  padding: 0;
+}
+
+.profile-cover {
+  height: 130px;
+  background: linear-gradient(
+    135deg,
+    #1677ff,
+    #69b1ff
+  );
+}
+
+.profile-header-content {
+  padding: 0 30px 30px;
+  margin-top: -50px;
+}
+
+.profile-avatar {
+  border: 5px solid white;
+}
+
+.profile-user-row {
+  min-width: 0;
+}
+
+.profile-user-info {
+  min-width: 0;
+}
+
+.profile-name {
+  margin: 45px 0 0 !important;
+}
+
+.profile-email {
+  display: block;
+  word-break: break-word;
+}
+
+.profile-tags {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.profile-edit-button {
+  min-width: 140px;
+}
+
+/* Account Overview */
+
+.profile-section-title {
+  margin-bottom: 16px !important;
+}
+
+.profile-statistics {
+  margin-bottom: 30px;
+}
+
+.profile-stat-card {
+  height: 100%;
+  border-radius: 12px;
+}
+
+.profile-stat-card .ant-statistic-title {
+  margin-bottom: 8px;
+}
+
+/* Information */
+
+.profile-information-row {
+  margin-bottom: 20px;
+}
+
+.profile-section-card {
+  height: 100%;
+  border-radius: 12px;
+}
+
+.profile-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 0;
+}
+
+.profile-info-label {
+  flex-shrink: 0;
+}
+
+.profile-info-value {
+  text-align: right;
+  word-break: break-word;
+  min-width: 0;
+}
+
+.profile-info-icon {
+  margin-right: 6px;
+}
+
+.profile-info-divider {
+  margin: 0 !important;
+}
+
+/* Saved Addresses */
+
+.profile-address-card {
+  margin-top: 20px;
+  border-radius: 12px;
+}
+
+.profile-address-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.address-title-icon {
+  margin-right: 8px;
+}
+
+.profile-address-loading {
+  text-align: center;
+  padding: 30px;
+}
+
+.profile-no-address {
+  text-align: center;
+  padding: 30px;
+}
+
+.no-address-icon {
+  display: block;
+  font-size: 40px;
+  color: #999;
+  margin-bottom: 12px;
+}
+
+.first-address-button {
+  margin-top: 16px;
+}
+
+.saved-address {
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid #d9d9d9;
+}
+
+.saved-address.default-address {
+  border: 2px solid #1677ff;
+}
+
+.saved-address-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.default-address-tag {
+  margin-left: 8px;
+}
+
+.address-divider {
+  margin: 12px 0 !important;
+}
+
+.address-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.address-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Quick Actions */
+
+.profile-quick-actions {
+  margin-top: 20px;
+  border-radius: 12px;
+}
+
+.quick-actions-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Modals */
+
+.avatar-upload {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar-help-text {
+  display: block;
+  margin-top: 8px;
+}
+
+/* Tablet */
+
+@media (max-width: 900px) {
+  .profile-page {
+    padding: 16px 0 30px;
+  }
+
+  .profile-cover {
+    height: 110px;
+  }
+
+  .profile-header-content {
+    padding: 0 22px 25px;
+  }
+
+  .profile-name {
+    font-size: 26px !important;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .profile-page {
+    padding: 12px 0 25px;
+  }
+
+  .profile-header-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  .profile-cover {
+    height: 90px;
+  }
+
+  .profile-header-content {
+    padding: 0 14px 20px;
+    margin-top: -40px;
+  }
+
+  .profile-user-row {
+    align-items: flex-start !important;
+  }
+
+  .profile-avatar {
+    width: 80px !important;
+    height: 80px !important;
+  }
+
+  .profile-name {
+    font-size: 22px !important;
+    margin: 35px 0 0 !important;
+  }
+
+  .profile-email {
+    font-size: 13px;
+  }
+
+  .profile-tags {
+    margin-top: 6px;
+  }
+
+  .profile-tags .ant-tag {
+    font-size: 11px;
+  }
+
+  .profile-edit-button {
+    width: 100%;
+  }
+
+  .profile-section-title {
+    font-size: 21px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .profile-statistics {
+    margin-bottom: 20px;
+  }
+
+  .profile-stat-card {
+    border-radius: 8px;
+  }
+
+  .profile-section-card,
+  .profile-address-card,
+  .profile-quick-actions {
+    border-radius: 8px;
+  }
+
+  .profile-info-row {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .profile-info-label {
+    font-size: 13px;
+  }
+
+  .profile-info-value {
+    font-size: 13px;
+    max-width: 60%;
+  }
+
+  .profile-address-header {
+    gap: 8px;
+  }
+
+  .profile-address-header > span {
+    font-size: 14px;
+  }
+
+  .profile-address-header .ant-btn {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .profile-no-address {
+    padding: 25px 5px;
+  }
+
+  .saved-address {
+    border-radius: 8px;
+  }
+
+  .address-actions {
+    gap: 6px;
+  }
+
+  .address-actions .ant-btn {
+    font-size: 12px;
+    padding: 3px 8px;
+  }
+
+  .quick-actions-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .quick-actions-list a,
+  .quick-actions-list .ant-btn {
+    width: 100%;
+  }
+
+  .avatar-upload {
+    flex-wrap: wrap;
+  }
+
+  .profile-modal .ant-modal {
+    max-width: calc(100vw - 24px);
+    margin: 12px auto;
+  }
+
+  .profile-modal .ant-modal-content {
+    padding: 16px;
+  }
+}
+
+/* Small mobile */
+
+@media (max-width: 380px) {
+  .profile-page {
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+
+  .profile-cover {
+    height: 80px;
+  }
+
+  .profile-header-content {
+    padding: 0 10px 16px;
+    margin-top: -35px;
+  }
+
+  .profile-avatar {
+    width: 70px !important;
+    height: 70px !important;
+  }
+
+  .profile-name {
+    font-size: 19px !important;
+    margin-top: 30px !important;
+  }
+
+  .profile-email {
+    font-size: 12px;
+  }
+
+  .profile-info-row {
+    gap: 8px;
+  }
+
+  .profile-info-label,
+  .profile-info-value {
+    font-size: 12px;
+  }
+
+  .profile-info-value {
+    max-width: 58%;
+  }
+
+  .profile-address-header > span {
+    font-size: 13px;
+  }
+
+  .profile-address-header .ant-btn {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+
+  .address-actions {
+    gap: 4px;
+  }
+
+  .address-actions .ant-btn {
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+}

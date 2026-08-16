@@ -3,19 +3,16 @@ import { Layout } from "antd";
 import Navbar from "../components/layout/Navbar";
 import AppFooter from "../components/layout/Footer";
 
+import "./MainLayout.css";
+
 const { Content } = Layout;
 
 const MainLayout = ({ children }) => {
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout className="main-layout">
       <Navbar />
 
-      <Content
-        style={{
-          padding: "30px",
-          background: "#f5f5f5",
-        }}
-      >
+      <Content className="main-content">
         {children}
       </Content>
 

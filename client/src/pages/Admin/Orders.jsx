@@ -14,6 +14,12 @@ import {
   updateOrderStatus,
 } from "../../services/adminOrderService";
 
+import "./AdminOrders.css";
+
+
+
+
+
 const { Title } = Typography;
 
 const AdminOrders = () => {
@@ -191,17 +197,21 @@ const AdminOrders = () => {
 
   return (
     <MainLayout>
-      <Title level={2}>
-        Order Management
-      </Title>
+      <div className="admin-orders">
+        <Title level={2} className="admin-orders-title">
+          Order Management
+        </Title>
 
-      <Table
-        rowKey="_id"
-        columns={columns}
-        dataSource={orders}
-        loading={loading}
-        scroll={{ x: 1000 }}
-      />
+        <div className="admin-orders-table">
+          <Table
+            rowKey="_id"
+            columns={columns}
+            dataSource={orders}
+            loading={loading}
+            scroll={{ x: 1000 }}
+          />
+        </div>
+      </div>
     </MainLayout>
   );
 };
