@@ -148,8 +148,7 @@ const AdminDashboard = () => {
   } = data.orderStatus;
 
   return (
-    <MainLayout>
-      <div className="admin-dashboard">
+          <div className="admin-dashboard">
         <Title level={2} className="admin-dashboard-title">
           Admin Dashboard
         </Title>
@@ -327,7 +326,6 @@ const AdminDashboard = () => {
           />
         </div>
       </div>
-    </MainLayout>
   );
 };
 

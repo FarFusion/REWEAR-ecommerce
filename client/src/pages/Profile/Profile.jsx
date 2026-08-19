@@ -17,6 +17,7 @@ import {
   Select,
   Popconfirm,
   Upload,
+  InputNumber
 } from "antd";
 
 import {
@@ -937,9 +938,24 @@ const Profile = () => {
                   message:
                     "Please enter phone number",
                 },
+                {
+                  len: 10,
+                  message: "Phone number must be exactly 10 digits",
+                },
+                {
+                  pattern: /^\d+$/,
+                  message: "Phone number must contain only numbers",
+                },
               ]}
             >
-              <Input />
+              <Input 
+                maxLength={10}
+                inputMode="numeric"
+                placeholder="Enter 10-digit phone number"
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, "");
+                  e.target.value = value;}}
+              />
             </Form.Item>
 
             <Form.Item
@@ -1007,9 +1023,21 @@ const Profile = () => {
                   message:
                     "Pincode must be 6 digits",
                 },
+                {
+                  pattern: /^\d+$/,
+                  message: "Pincode must contain only numbers",
+                },
               ]}
             >
-              <Input maxLength={6} />
+              <Input 
+                maxLength={6}
+                inputMode="numeric"
+                placeholder="Enter pincode"
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, "");
+                  e.target.value = value;
+                }}
+              />
             </Form.Item>
 
             <Button

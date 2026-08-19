@@ -232,7 +232,7 @@ const SellProduct = () => {
               />
             </Form.Item>
 
-            {/* Price */}
+            {/* Selling Price */}
             <Form.Item
               label="Selling Price"
               name="price"
