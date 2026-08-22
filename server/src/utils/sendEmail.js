@@ -1,7 +1,48 @@
-import nodemailer from "nodemailer";
+// import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 
 
+
+// const sendEmail = async ({
+//   to,
+//   subject,
+//   html,
+//   attachments = [],
+// }) => {
+//   try {
+//     const transporter = nodemailer.createTransport({
+//       host: "smtp.gmail.com",
+//       port: 465,
+//       secure: true,
+//       family: 4,
+//       auth: {
+//         user: process.env.EMAIL_USER,
+//         pass: process.env.EMAIL_PASS,
+//       },
+//     });
+
+//     const mailData = {
+//       from: `"ReWear" <${process.env.EMAIL_USER}>`,
+//       to,
+//       subject,
+//       html,
+//       attachments,
+//     };
+
+//     const info = await transporter.sendMail(mailData);
+
+//     console.log("Email sent:", info.messageId);
+
+//     return info;
+//   } catch (error) {
+//     console.error("Email sending failed:", error);
+//     throw error;
+//   }
+// };
+
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendEmail = async ({
   to,
@@ -10,30 +51,28 @@ const sendEmail = async ({
   attachments = [],
 }) => {
   try {
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
-      family: 4,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    const mailData = {
-      from: `"ReWear" <${process.env.EMAIL_USER}>`,
-      to,
+    const emailData = {
+      from: process.env.EMAIL_FROM,
+      to: [to],
       subject,
       html,
-      attachments,
     };
 
-    const info = await transporter.sendMail(mailData);
+    // Add attachments only when provided
+    if (attachments.length > 0) {
+      emailData.attachments = attachments;
+    }
 
-    console.log("Email sent:", info.messageId);
+    const { data, error } = await resend.emails.send(emailData);
 
-    return info;
+    if (error) {
+      console.error("Resend email error:", error);
+      throw new Error(error.message);
+    }
+
+    console.log("Email sent:", data.id);
+
+    return data;
   } catch (error) {
     console.error("Email sending failed:", error);
     throw error;
