@@ -3,47 +3,6 @@ import dotenv from "dotenv";
 
 
 
-
-const createTransporter = () => {
-  try {
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
-      requireTLS: true,
-      family: 4,
-
-      connectionTimeout: 10000,
-      greetingTimeout: 10000,
-      socketTimeout: 10000,
-
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    return transporter;
-  } catch (error) {
-    console.error("Transporter creation failed:", error);
-    throw error;
-  }
-};
-
-const verifyTransporter = (transporter) => {
-  return new Promise((resolve, reject) => {
-    transporter.verify((error, success) => {
-      if (error) {
-        console.error("SMTP CONNECTION ERROR:", error);
-        reject(error);
-      } else {
-        console.log("SMTP SERVER READY:", success);
-        resolve(success);
-      }
-    });
-  });
-};
-
 const sendEmail = async ({
   to,
   subject,
@@ -51,17 +10,26 @@ const sendEmail = async ({
   attachments = [],
 }) => {
   try {
-    const transporter = createTransporter();
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      family: 4,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
 
-    await verifyTransporter(transporter);
-
-    const info = await transporter.sendMail({
+    const mailData = {
       from: `"ReWear" <${process.env.EMAIL_USER}>`,
       to,
       subject,
       html,
       attachments,
-    });
+    };
+
+    const info = await transporter.sendMail(mailData);
 
     console.log("Email sent:", info.messageId);
 
