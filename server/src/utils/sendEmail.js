@@ -42,6 +42,8 @@ import dotenv from "dotenv";
 
 import { Resend } from "resend";
 
+console.log("🔥 RESEND EMAIL SERVICE LOADED");
+
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendEmail = async ({
@@ -58,7 +60,6 @@ const sendEmail = async ({
       html,
     };
 
-    // Add attachments only when provided
     if (attachments.length > 0) {
       emailData.attachments = attachments;
     }
@@ -66,11 +67,11 @@ const sendEmail = async ({
     const { data, error } = await resend.emails.send(emailData);
 
     if (error) {
-      console.error("Resend email error:", error);
+      console.error("RESEND ERROR:", error);
       throw new Error(error.message);
     }
 
-    console.log("Email sent:", data.id);
+    console.log("Email sent successfully:", data.id);
 
     return data;
   } catch (error) {
